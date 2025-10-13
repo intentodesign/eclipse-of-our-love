@@ -5,6 +5,7 @@ import { StarField } from "@/components/StarField";
 import { Calendar, MapPin, Heart, Eclipse } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import eclipseHero from "@/assets/eclipse-hero.jpg";
+import proposalPhoto from "@/assets/proposal.jpg";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -48,6 +49,89 @@ const Home = () => {
             <span className="font-serif italic">Nosso casamento</span>
             <div className="w-12 h-px bg-accent/30" />
           </div>
+        </div>
+      </section>
+
+      {/* Our Story Section */}
+      <section className="relative py-20 px-4">
+        <div className="max-w-4xl mx-auto">
+          {/* Photo with simple border */}
+          <div className="flex justify-center mb-12 animate-fadeIn">
+            <div className="relative">
+              <img
+                src={proposalPhoto}
+                alt="O pedido de casamento"
+                className="w-full max-w-md rounded-lg shadow-soft border-4 border-primary/20"
+              />
+            </div>
+          </div>
+
+          {/* Story Card */}
+          <Card className="shadow-soft backdrop-blur-sm bg-card/80 border-primary/20 p-8 md:p-12">
+            <div className="text-center space-y-6">
+              <div className="flex items-center justify-center gap-3 mb-6">
+                <div className="w-12 h-px bg-accent/30" />
+                <Heart className="w-6 h-6 text-accent fill-accent" />
+                <div className="w-12 h-px bg-accent/30" />
+              </div>
+
+              <h2 className="text-3xl md:text-4xl font-serif font-semibold text-foreground uppercase mb-8">
+                Nossa História
+              </h2>
+
+              <div className="space-y-6 text-muted-foreground leading-relaxed max-w-2xl mx-auto text-left">
+                <p>
+                  Alguns dias atrás ela me perguntou: <em className="text-foreground">"Quando você percebeu que me amava?"</em>
+                </p>
+
+                <p>
+                  E eu realmente parei pra pensar…
+                </p>
+
+                <p>
+                  Percebi que foi muito antes de derrubar o anel no chão do jeito mais desajeitado possível.
+                </p>
+
+                <p>
+                  Foi muito antes também, de errar a mão de noivado, enquanto me ajoelhava na frente da família, por volta da meia-noite e quarenta do dia um.
+                </p>
+
+                <p>
+                  Também foi antes de fazer um jantar a luz de velas e antes ainda de esconder o porta-anel num lugar que ela jamais acharia. Foi uma missão (quase) impossível.
+                </p>
+
+                <p>
+                  Também foi antes de mentir dizendo que ia jogar com meu amigo, quando na verdade, ele me ajudou a escolher o anel perfeito (e isso, meus amigos, poderá e será usado contra mim num futuro não tão distante).
+                </p>
+
+                <p>
+                  Foi antes de pegar uma rolha de um vinho qualquer (que agora não é mais um vinho qualquer) e cortá-la até caber dentro do anel de namoro que lhe dei há tempos atrás, e que se sumisse, ela perceberia no primeiro dia.
+                </p>
+
+                <p className="text-sm italic">
+                  Eu esqueci que o primeiro tinha ficado folgado. Repeti o erro.
+                </p>
+
+                <p>
+                  Foi antes de muita coisa, mas depois de pensar bastante, percebi que nunca houve uma linha clara entre o amor e o não-amor. Ele chega e fica. Um dia, de repente, você olha pro lado e percebe:
+                </p>
+
+                <p className="text-xl font-serif text-foreground text-center pt-4">
+                  É ela! Sempre foi.
+                </p>
+
+                <p className="text-foreground font-medium text-center pt-4">
+                  Te amo, minha noiva. Bem-vinda ao nosso início.
+                </p>
+              </div>
+
+              <div className="flex items-center justify-center gap-3 mt-8">
+                <div className="w-12 h-px bg-accent/30" />
+                <Heart className="w-6 h-6 text-accent fill-accent" />
+                <div className="w-12 h-px bg-accent/30" />
+              </div>
+            </div>
+          </Card>
         </div>
       </section>
 
