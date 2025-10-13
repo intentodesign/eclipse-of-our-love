@@ -67,7 +67,8 @@ const Home = () => {
                   </div>
                   <div>
                     <h3 className="text-xl font-serif font-medium mb-2">Data</h3>
-                    <p className="text-muted-foreground">Em breve</p>
+                    <p className="text-muted-foreground text-lg font-medium">16 de Janeiro de 2026</p>
+                    <p className="text-muted-foreground text-sm">17h às 21h</p>
                   </div>
                 </div>
 
@@ -78,24 +79,54 @@ const Home = () => {
                   <div>
                     <h3 className="text-xl font-serif font-medium mb-2">Local</h3>
                     <p className="text-muted-foreground">Salão de Festas do</p>
-                    <p className="text-muted-foreground font-medium">Condomínio Versatto</p>
+                    <p className="text-muted-foreground font-medium mb-2">Condomínio Versatto</p>
+                    <a
+                      href="https://maps.app.goo.gl/AK1pcd9De3SZ1fQf6"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-primary hover:text-primary/80 text-sm underline transition-smooth"
+                    >
+                      Abrir no mapa
+                    </a>
                   </div>
                 </div>
               </div>
 
               <div className="pt-8 border-t border-border/50 mt-12">
                 <p className="text-lg text-muted-foreground leading-relaxed max-w-2xl mx-auto mb-8">
-                  Será uma alegria compartilhar este momento especial com você. 
+                  Será uma alegria compartilhar este momento especial com você.
                   Venha celebrar conosco o nosso amor e o início de nossa vida juntos.
                 </p>
 
-                <Button 
-                  size="lg"
-                  onClick={() => navigate('/confirmar')}
-                  className="bg-gradient-eclipse hover:opacity-90 text-foreground font-medium px-8 py-6 text-lg shadow-glow transition-smooth"
-                >
-                  Confirmar Presença
-                </Button>
+                <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                  <Button
+                    size="lg"
+                    onClick={() => navigate('/confirmar')}
+                    className="bg-gradient-eclipse hover:opacity-90 text-foreground font-medium px-8 py-6 text-lg shadow-glow transition-smooth"
+                  >
+                    Confirmar Presença
+                  </Button>
+
+                  <Button
+                    size="lg"
+                    variant="outline"
+                    onClick={() => {
+                      const event = {
+                        title: 'Casamento Gabriel e Duda',
+                        description: 'Celebração do casamento de Gabriel e Duda',
+                        location: 'Salão de Festas Condomínio Versatto',
+                        start: '20260116T170000',
+                        end: '20260116T210000'
+                      };
+                      const url = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(event.title)}&details=${encodeURIComponent(event.description)}&location=${encodeURIComponent(event.location)}&dates=${event.start}/${event.end}`;
+                      window.open(url, '_blank');
+                    }}
+                    className="border-primary/30 hover:bg-primary/10 transition-smooth"
+                  >
+                    <Calendar className="w-5 h-5 mr-2" />
+                    Adicionar ao Calendário
+                  </Button>
+                </div>
               </div>
             </div>
           </Card>

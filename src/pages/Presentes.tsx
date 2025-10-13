@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { EclipseDecoration } from "@/components/EclipseDecoration";
 import { StarField } from "@/components/StarField";
-import { Gift, Heart, Sparkles } from "lucide-react";
+import { Gift, Heart, DollarSign, Home as HomeIcon } from "lucide-react";
 import { toast } from "sonner";
 import {
   Dialog,
@@ -13,33 +13,30 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { useNavigate } from "react-router-dom";
 
 const Presentes = () => {
-  const [showVaquinha, setShowVaquinha] = useState(false);
+  const navigate = useNavigate();
+  const [selectedValue, setSelectedValue] = useState<number | null>(null);
 
-  const handleNoGift = () => {
-    setShowVaquinha(true);
+  const handleContribute = (value: number) => {
+    setSelectedValue(value);
   };
 
-  const handleVaquinhaYes = () => {
+  const handleConfirmContribution = () => {
     toast.success("Muito obrigado! 💝", {
-      description: "Sua contribuição será muito especial para nossa lua de mel!",
+      description: "Entre em contato conosco para receber os dados bancários para contribuição.",
+      duration: 4000,
     });
   };
 
-  const handleVaquinhaNo = () => {
-    toast.info("Tudo bem! 💫", {
-      description: "Sua presença já é o maior presente para nós!",
-    });
-  };
-
-  const giftList = [
-    { id: 1, name: "Jogo de Panelas Premium", category: "Cozinha" },
-    { id: 2, name: "Jogo de Cama Casal King", category: "Quarto" },
-    { id: 3, name: "Aparelho de Jantar 42 Peças", category: "Mesa" },
-    { id: 4, name: "Liquidificador de Alta Potência", category: "Cozinha" },
-    { id: 5, name: "Cafeteira Expresso", category: "Cozinha" },
-    { id: 6, name: "Conjunto de Toalhas de Banho", category: "Banho" },
+  const contributionOptions = [
+    { id: 1, value: 50, label: "R$ 50", description: "Uma pequena lembrança" },
+    { id: 2, value: 100, label: "R$ 100", description: "Ajuda especial" },
+    { id: 3, value: 200, label: "R$ 200", description: "Contribuição generosa" },
+    { id: 4, value: 300, label: "R$ 300", description: "Presente incrível" },
+    { id: 5, value: 500, label: "R$ 500", description: "Presente maravilhoso" },
+    { id: 6, value: 0, label: "Outro valor", description: "Escolha quanto deseja" },
   ];
 
   return (
@@ -49,100 +46,110 @@ const Presentes = () => {
       <EclipseDecoration className="bottom-20 right-10 opacity-20" />
 
       <div className="relative z-10 max-w-4xl mx-auto">
+        {/* Header com botão de voltar */}
+        <div className="mb-8">
+          <Button
+            variant="ghost"
+            onClick={() => navigate('/')}
+            className="hover:bg-primary/10 transition-smooth"
+          >
+            <HomeIcon className="w-4 h-4 mr-2" />
+            Voltar para o início
+          </Button>
+        </div>
+
         <div className="text-center mb-12 animate-fadeIn">
           <Gift className="w-12 h-12 mx-auto mb-4 text-secondary shimmer" />
           <h1 className="text-4xl md:text-5xl font-serif font-bold text-foreground mb-4 uppercase">
-            Lista de Presentes
+            Contribua com Nosso Sonho
           </h1>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Se desejar nos presentear, escolha algo que nos ajude a construir nosso novo lar
+            Sua contribuição nos ajudará a construir nosso novo lar e realizar sonhos juntos
           </p>
         </div>
 
         <Card className="shadow-soft backdrop-blur-sm bg-card/80 border-primary/20 p-8 md:p-10 mb-8">
-          <div className="grid md:grid-cols-2 gap-6">
-            {giftList.map((gift) => (
-              <div 
-                key={gift.id} 
-                className="p-6 rounded-lg border border-border/50 bg-background/30 hover:bg-background/50 transition-smooth hover:shadow-soft"
+          <div className="text-center mb-8">
+            <DollarSign className="w-10 h-10 mx-auto mb-4 text-primary" />
+            <h2 className="text-2xl font-serif font-semibold mb-2">
+              Escolha um Valor
+            </h2>
+            <p className="text-muted-foreground">
+              Qualquer contribuição será recebida com muito carinho
+            </p>
+          </div>
+
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
+            {contributionOptions.map((option) => (
+              <button
+                key={option.id}
+                onClick={() => handleContribute(option.value)}
+                className={`p-6 rounded-lg border-2 transition-smooth text-left hover:shadow-soft ${
+                  selectedValue === option.value
+                    ? 'border-primary bg-primary/10'
+                    : 'border-border/50 bg-background/30 hover:bg-background/50'
+                }`}
               >
-                <div className="flex items-start justify-between">
-                  <div>
-                    <p className="text-xs text-primary font-medium mb-1">{gift.category}</p>
-                    <h3 className="font-medium text-foreground">{gift.name}</h3>
-                  </div>
-                  <Sparkles className="w-5 h-5 text-accent flex-shrink-0" />
-                </div>
-              </div>
+                <p className="text-2xl font-bold text-foreground mb-1">{option.label}</p>
+                <p className="text-sm text-muted-foreground">{option.description}</p>
+              </button>
             ))}
           </div>
 
-          <div className="mt-8 pt-8 border-t border-border/50">
-            <p className="text-center text-muted-foreground mb-6">
-              Entre em contato conosco para mais informações sobre os presentes
-            </p>
-          </div>
+          {selectedValue !== null && (
+            <div className="animate-fadeIn">
+              <Dialog>
+                <DialogTrigger asChild>
+                  <Button
+                    size="lg"
+                    onClick={handleConfirmContribution}
+                    className="w-full bg-gradient-eclipse hover:opacity-90 text-foreground font-medium py-6 text-lg shadow-glow transition-smooth"
+                  >
+                    Quero Contribuir{selectedValue > 0 ? ` com ${contributionOptions.find(o => o.value === selectedValue)?.label}` : ''}
+                  </Button>
+                </DialogTrigger>
+                <DialogContent className="sm:max-w-md">
+                  <DialogHeader>
+                    <DialogTitle className="font-serif text-2xl">Muito Obrigado!</DialogTitle>
+                    <DialogDescription className="text-base pt-4 space-y-4">
+                      <p>
+                        Para realizar sua contribuição, entre em contato conosco através do WhatsApp para receber os dados bancários.
+                      </p>
+                      <p className="text-foreground font-medium">
+                        Sua generosidade significa muito para nós e nos ajudará a realizar nossos sonhos! 💫
+                      </p>
+                    </DialogDescription>
+                  </DialogHeader>
+                  <div className="mt-4">
+                    <Button
+                      onClick={() => navigate('/')}
+                      variant="outline"
+                      className="w-full"
+                    >
+                      Voltar para o início
+                    </Button>
+                  </div>
+                </DialogContent>
+              </Dialog>
+            </div>
+          )}
         </Card>
 
         <Card className="shadow-soft backdrop-blur-sm bg-card/80 border-accent/20 p-8 text-center">
           <Heart className="w-10 h-10 mx-auto mb-4 text-accent fill-accent/20" />
           <h2 className="text-2xl font-serif font-semibold mb-4 uppercase">
-            Não Quer Dar Presente?
+            Não Pode Contribuir?
           </h2>
-          
-          {!showVaquinha ? (
-            <>
-              <p className="text-muted-foreground mb-6">
-                Não se preocupe! Sua presença já é o maior presente para nós.
-              </p>
-              <Button
-                onClick={handleNoGift}
-                variant="outline"
-                className="border-accent/30 hover:bg-accent/10 transition-smooth"
-              >
-                Não quero dar presente
-              </Button>
-            </>
-          ) : (
-            <div className="space-y-6 animate-fadeIn">
-              <p className="text-lg text-foreground">
-                Gostaria de ajudar nossa vaquinha da Lua de Mel?
-              </p>
-              <p className="text-muted-foreground">
-                Qualquer contribuição será muito especial e nos ajudará a criar memórias inesquecíveis! ✨
-              </p>
-              <div className="flex gap-4 justify-center flex-wrap">
-                <Dialog>
-                  <DialogTrigger asChild>
-                    <Button 
-                      onClick={handleVaquinhaYes}
-                      className="bg-gradient-eclipse hover:opacity-90 text-foreground shadow-glow transition-smooth"
-                    >
-                      Sim, quero contribuir! 💝
-                    </Button>
-                  </DialogTrigger>
-                  <DialogContent className="sm:max-w-md">
-                    <DialogHeader>
-                      <DialogTitle className="font-serif text-2xl">Muito Obrigado!</DialogTitle>
-                      <DialogDescription className="text-base pt-4">
-                        Para contribuir com nossa lua de mel, entre em contato conosco para receber os dados bancários.
-                        <br/><br/>
-                        Sua generosidade significa muito para nós! 💫
-                      </DialogDescription>
-                    </DialogHeader>
-                  </DialogContent>
-                </Dialog>
-                
-                <Button
-                  onClick={handleVaquinhaNo}
-                  variant="outline"
-                  className="border-border/50 hover:bg-muted/50 transition-smooth"
-                >
-                  Não, obrigado
-                </Button>
-              </div>
-            </div>
-          )}
+          <p className="text-muted-foreground mb-6">
+            Não se preocupe! Sua presença na celebração já é o maior presente para nós. 💝
+          </p>
+          <Button
+            onClick={() => navigate('/')}
+            variant="outline"
+            className="border-accent/30 hover:bg-accent/10 transition-smooth"
+          >
+            Voltar para o convite
+          </Button>
         </Card>
       </div>
     </div>

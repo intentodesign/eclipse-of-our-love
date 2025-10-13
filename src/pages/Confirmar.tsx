@@ -14,7 +14,8 @@ import { EclipseDecoration } from "@/components/EclipseDecoration";
 import { StarField } from "@/components/StarField";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
-import { Heart } from "lucide-react";
+import { Heart, Loader2, Home as HomeIcon } from "lucide-react";
+import { APPS_SCRIPT_URL, IS_APPS_SCRIPT_CONFIGURED } from "@/config/api";
 
 const Confirmar = () => {
   const navigate = useNavigate();
@@ -22,17 +23,20 @@ const Confirmar = () => {
     nome: "",
     papel: "",
     parentesco: "",
+    email: "",
+    telefone: "",
   });
   const [showParentesco, setShowParentesco] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handlePapelChange = (value: string) => {
     setFormData({ ...formData, papel: value, parentesco: "" });
     setShowParentesco(value.includes("Família"));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!formData.nome || !formData.papel) {
       toast.error("Por favor, preencha todos os campos obrigatórios");
       return;
@@ -43,16 +47,44 @@ const Confirmar = () => {
       return;
     }
 
-    // TODO: Integrate with Google Sheets via Apps Script when backend is needed
-    console.log("Dados do formulário:", formData);
-    
-    toast.success("Presença confirmada com sucesso! ✨", {
-      description: "Obrigado por confirmar. Redirecionando para os presentes...",
-    });
+    if (!IS_APPS_SCRIPT_CONFIGURED) {
+      toast.warning("Apps Script não configurado", {
+        description: "Os dados serão salvos localmente. Configure o Apps Script para salvar no Google Sheets.",
+      });
+      console.log("Dados do formulário:", formData);
+      setTimeout(() => navigate("/presentes"), 2000);
+      return;
+    }
 
-    setTimeout(() => {
-      navigate("/presentes");
-    }, 2000);
+    setIsSubmitting(true);
+
+    try {
+      const response = await fetch(APPS_SCRIPT_URL, {
+        method: 'POST',
+        mode: 'no-cors', // Apps Script requer no-cors
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      // Com no-cors, não conseguimos ler a resposta, mas se não der erro, significa que funcionou
+      toast.success("Presença confirmada com sucesso! ✨", {
+        description: "Obrigado por confirmar. Redirecionando para os presentes...",
+      });
+
+      setTimeout(() => {
+        navigate("/presentes");
+      }, 2000);
+
+    } catch (error) {
+      console.error("Erro ao enviar dados:", error);
+      toast.error("Erro ao confirmar presença", {
+        description: "Tente novamente mais tarde ou entre em contato conosco.",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -62,6 +94,18 @@ const Confirmar = () => {
       <EclipseDecoration className="bottom-20 left-10 opacity-20" />
 
       <div className="relative z-10 max-w-2xl mx-auto">
+        {/* Header com botão de voltar */}
+        <div className="mb-8">
+          <Button
+            variant="ghost"
+            onClick={() => navigate('/')}
+            className="hover:bg-primary/10 transition-smooth"
+          >
+            <HomeIcon className="w-4 h-4 mr-2" />
+            Voltar para o início
+          </Button>
+        </div>
+
         <div className="text-center mb-12 animate-fadeIn">
           <Heart className="w-12 h-12 mx-auto mb-4 text-accent fill-accent shimmer" />
           <h1 className="text-4xl md:text-5xl font-serif font-bold text-foreground mb-4 uppercase">
@@ -111,8 +155,8 @@ const Confirmar = () => {
                 <Label htmlFor="parentesco" className="text-base">
                   Parentesco *
                 </Label>
-                <Select 
-                  value={formData.parentesco} 
+                <Select
+                  value={formData.parentesco}
                   onValueChange={(value) => setFormData({ ...formData, parentesco: value })}
                 >
                   <SelectTrigger className="bg-background/50 border-border/50 focus:border-primary transition-smooth">
@@ -131,12 +175,48 @@ const Confirmar = () => {
               </div>
             )}
 
-            <Button 
-              type="submit" 
+            <div className="space-y-2">
+              <Label htmlFor="email" className="text-base">
+                Email (opcional)
+              </Label>
+              <Input
+                id="email"
+                type="email"
+                placeholder="seu@email.com"
+                value={formData.email}
+                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                className="bg-background/50 border-border/50 focus:border-primary transition-smooth"
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="telefone" className="text-base">
+                Telefone (opcional)
+              </Label>
+              <Input
+                id="telefone"
+                type="tel"
+                placeholder="(00) 00000-0000"
+                value={formData.telefone}
+                onChange={(e) => setFormData({ ...formData, telefone: e.target.value })}
+                className="bg-background/50 border-border/50 focus:border-primary transition-smooth"
+              />
+            </div>
+
+            <Button
+              type="submit"
               size="lg"
-              className="w-full bg-gradient-eclipse hover:opacity-90 text-foreground font-medium py-6 text-lg shadow-glow transition-smooth"
+              disabled={isSubmitting}
+              className="w-full bg-gradient-eclipse hover:opacity-90 text-foreground font-medium py-6 text-lg shadow-glow transition-smooth disabled:opacity-50"
             >
-              Confirmar Presença
+              {isSubmitting ? (
+                <>
+                  <Loader2 className="w-5 h-5 mr-2 animate-spin" />
+                  Confirmando...
+                </>
+              ) : (
+                'Confirmar Presença'
+              )}
             </Button>
           </form>
 
