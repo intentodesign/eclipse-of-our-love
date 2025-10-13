@@ -2,11 +2,9 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { EclipseDecoration } from "@/components/EclipseDecoration";
 import { StarField } from "@/components/StarField";
-import { Calendar, MapPin, Heart } from "lucide-react";
+import { Calendar, MapPin, Heart, Eclipse } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import eclipseHero from "@/assets/eclipse-hero.jpg";
-import moonIcon from "@/assets/moon-icon.png";
-import sunIcon from "@/assets/sun-icon.png";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -32,9 +30,9 @@ const Home = () => {
         <div className="relative z-10 max-w-4xl mx-auto text-center space-y-8 animate-fadeIn">
           {/* Icons decorating the title */}
           <div className="flex items-center justify-center gap-8 mb-8">
-            <img src={sunIcon} alt="Sol" className="w-16 h-16 md:w-20 md:h-20 float-animation" />
+            <Eclipse className="w-16 h-16 md:w-20 md:h-20 text-primary float-animation" />
             <Heart className="w-8 h-8 text-accent fill-accent shimmer" />
-            <img src={moonIcon} alt="Lua" className="w-16 h-16 md:w-20 md:h-20 float-animation" style={{ animationDelay: '1s' }} />
+            <Eclipse className="w-16 h-16 md:w-20 md:h-20 text-secondary float-animation" style={{ animationDelay: '1s' }} />
           </div>
 
           <h1 className="text-5xl md:text-7xl font-serif font-bold text-foreground leading-tight uppercase">
