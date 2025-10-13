@@ -9,8 +9,7 @@ import { openGoogleCalendar } from "@/utils/calendar";
 const Obrigado = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-  const presente = searchParams.get('presente');
-  const valor = searchParams.get('valor');
+  const deuPresente = searchParams.get('presente') === 'sim';
 
   return (
     <div className="min-h-screen relative overflow-hidden py-20 px-4">
@@ -40,15 +39,9 @@ const Obrigado = () => {
           <h1 className="text-4xl md:text-6xl font-serif font-bold text-foreground mb-6 uppercase leading-tight">
             Muito Obrigado!
           </h1>
-          {presente && valor ? (
-            <p className="text-xl md:text-2xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-              {presente === 'vaquinha' ? `Sua contribuição de R$ ${valor}` : `Seu presente: ${presente}`}
-            </p>
-          ) : (
-            <p className="text-xl md:text-2xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-              Sua presença é o maior presente que poderíamos receber
-            </p>
-          )}
+          <p className="text-xl md:text-2xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+            {deuPresente ? 'Sua generosidade nos emociona!' : 'Sua presença é o maior presente que poderíamos receber'}
+          </p>
         </div>
 
         <Card className="shadow-soft backdrop-blur-sm bg-card/80 border-accent/20 p-10 md:p-14 text-center">
@@ -58,14 +51,14 @@ const Obrigado = () => {
             </div>
 
             <div className="space-y-6">
-              {presente && valor ? (
+              {deuPresente ? (
                 <>
                   <p className="text-lg md:text-xl text-foreground leading-relaxed">
-                    Sua generosidade nos emociona profundamente. Este {presente === 'vaquinha' ? 'gesto' : 'presente'} nos ajudará a construir nossa vida juntos e será usado com muito carinho.
+                    Sua generosidade nos emociona profundamente. Este presente nos ajudará a construir nossa vida juntos e será usado com muito carinho.
                   </p>
 
                   <p className="text-lg text-muted-foreground leading-relaxed">
-                    Cada vez que {presente === 'vaquinha' ? 'lembrarmos deste momento' : `usarmos ${presente.toLowerCase()}`}, vamos lembrar do seu apoio e do amor que você tem por nós. Muito obrigado por fazer parte da nossa história!
+                    Cada vez que usarmos o que você nos deu, vamos lembrar do seu apoio e do amor que você tem por nós. Muito obrigado por fazer parte da nossa história!
                   </p>
                 </>
               ) : (
