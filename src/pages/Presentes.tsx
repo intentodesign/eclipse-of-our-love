@@ -31,6 +31,15 @@ interface Present {
   price: number;
   icon: typeof Coffee;
   available: boolean;
+  paymentLink: string;
+}
+
+interface ContributionOption {
+  id: number;
+  value: number;
+  label: string;
+  description: string;
+  paymentLink: string;
 }
 
 const Presentes = () => {
@@ -40,23 +49,23 @@ const Presentes = () => {
   const [selectedPresent, setSelectedPresent] = useState<Present | null>(null);
 
   const presents: Present[] = [
-    { id: 1, name: "Jogo de Toalhas", price: 80, icon: Bed, available: true },
-    { id: 2, name: "Cafeteira", price: 120, icon: Coffee, available: true },
-    { id: 3, name: "Jogo de Panelas", price: 180, icon: Utensils, available: true },
-    { id: 4, name: "Airfryer", price: 250, icon: Wind, available: true },
-    { id: 5, name: "Aparelho de Jantar", price: 200, icon: UtensilsCrossed, available: true },
-    { id: 6, name: "Kit Utensilios de Cozinha", price: 150, icon: Utensils, available: true },
+    { id: 1, name: "Jogo de Toalhas", price: 80, icon: Bed, available: true, paymentLink: "https://mpago.li/1gHyXWW" },
+    { id: 2, name: "Cafeteira", price: 120, icon: Coffee, available: true, paymentLink: "https://mpago.li/19HvsaU" },
+    { id: 3, name: "Jogo de Panelas", price: 180, icon: Utensils, available: true, paymentLink: "https://mpago.li/1zLY8Ve" },
+    { id: 4, name: "Airfryer", price: 250, icon: Wind, available: true, paymentLink: "https://mpago.li/1nCLwYr" },
+    { id: 5, name: "Aparelho de Jantar", price: 200, icon: UtensilsCrossed, available: true, paymentLink: "https://mpago.li/2ciB29K" },
+    { id: 6, name: "Kit Utensilios de Cozinha", price: 150, icon: Utensils, available: true, paymentLink: "https://mpago.li/1FP37Dv" },
   ];
 
-  const contributionOptions = [
-    { id: 1, value: 20, label: "R$ 20", description: "Um pastel com caldo de cana na orla de Aracaju" },
-    { id: 2, value: 50, label: "R$ 50", description: "Um hambúrguer do Burger King" },
-    { id: 3, value: 200, label: "R$ 200", description: "Um jantar especial" },
-    { id: 4, value: 300, label: "R$ 300", description: "Uma viagem a Maceió" },
-    { id: 5, value: 0, label: "Outro valor", description: "Escolha quanto deseja contribuir" },
+  const contributionOptions: ContributionOption[] = [
+    { id: 1, value: 20, label: "R$ 20", description: "Um pastel com caldo de cana na orla de Aracaju", paymentLink: "https://mpago.li/2z5zP3k" },
+    { id: 2, value: 50, label: "R$ 50", description: "Um hambúrguer do Burger King", paymentLink: "https://mpago.li/1waPnoe" },
+    { id: 3, value: 200, label: "R$ 200", description: "Um jantar especial", paymentLink: "https://mpago.li/2uzmT6x" },
+    { id: 4, value: 300, label: "R$ 300", description: "Uma viagem a Maceió", paymentLink: "https://mpago.li/2DPgzk1" },
+    { id: 5, value: 0, label: "Outro valor", description: "Escolha quanto deseja contribuir", paymentLink: "https://link.mercadopago.com.br/leaveyourmark" },
   ];
 
-  const [selectedContribution, setSelectedContribution] = useState<number | null>(null);
+  const [selectedContribution, setSelectedContribution] = useState<ContributionOption | null>(null);
 
   const handlePresentClick = (present: Present) => {
     setSelectedPresent(present);
@@ -65,17 +74,14 @@ const Presentes = () => {
   const handleBuyPresent = () => {
     if (!selectedPresent) return;
 
-    // TODO: Integrar com Mercado Pago
     toast.success(`Obrigado por escolher ${selectedPresent.name}!`, {
-      description: "Você será redirecionado para o pagamento em breve.",
-      duration: 4000,
+      description: "Você será redirecionado para o pagamento.",
+      duration: 2000,
     });
 
-    // Por enquanto, apenas fecha o dialog
-    // Quando o Mercado Pago estiver configurado, vai redirecionar para o link de pagamento
+    // Redireciona para o Mercado Pago
     setTimeout(() => {
-      setSelectedPresent(null);
-      navigate(`/obrigado?presente=${encodeURIComponent(selectedPresent.name)}&valor=${selectedPresent.price}`);
+      window.location.href = selectedPresent.paymentLink;
     }, 2000);
   };
 
@@ -85,13 +91,17 @@ const Presentes = () => {
   };
 
   const handleConfirmContribution = () => {
-    if (selectedContribution === null) return;
+    if (!selectedContribution) return;
 
     toast.success("Muito obrigado! 💝", {
-      description: "Entre em contato conosco para receber os dados bancários.",
-      duration: 4000,
+      description: "Você será redirecionado para o pagamento.",
+      duration: 2000,
     });
-    setTimeout(() => navigate(`/obrigado?presente=vaquinha&valor=${selectedContribution > 0 ? selectedContribution : 'personalizado'}`), 2000);
+
+    // Redireciona para o Mercado Pago
+    setTimeout(() => {
+      window.location.href = selectedContribution.paymentLink;
+    }, 2000);
   };
 
   const handleNoContribution = () => {
@@ -212,9 +222,9 @@ const Presentes = () => {
                 {contributionOptions.map((option) => (
                   <button
                     key={option.id}
-                    onClick={() => setSelectedContribution(option.value)}
+                    onClick={() => setSelectedContribution(option)}
                     className={`p-6 rounded-lg border-2 transition-smooth text-left hover:shadow-soft ${
-                      selectedContribution === option.value
+                      selectedContribution?.id === option.id
                         ? 'border-primary bg-primary/10'
                         : 'border-border/50 bg-background/30 hover:bg-background/50'
                     }`}
@@ -225,14 +235,14 @@ const Presentes = () => {
                 ))}
               </div>
 
-              {selectedContribution !== null && (
+              {selectedContribution && (
                 <div className="flex gap-4 justify-center animate-fadeIn">
                   <Button
                     size="lg"
                     onClick={handleConfirmContribution}
                     className="bg-gradient-eclipse hover:opacity-90 text-foreground font-medium px-8 py-6 text-lg shadow-glow transition-smooth"
                   >
-                    Quero Contribuir{selectedContribution > 0 ? ` com R$ ${selectedContribution}` : ''}
+                    Quero Contribuir{selectedContribution.value > 0 ? ` com ${selectedContribution.label}` : ''}
                   </Button>
                 </div>
               )}
