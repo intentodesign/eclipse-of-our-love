@@ -64,11 +64,11 @@ const Confirmar = () => {
       <div className="relative z-10 max-w-2xl mx-auto">
         <div className="text-center mb-12 animate-fadeIn">
           <Heart className="w-12 h-12 mx-auto mb-4 text-accent fill-accent shimmer" />
-          <h1 className="text-4xl md:text-5xl font-serif font-bold text-foreground mb-4">
+          <h1 className="text-4xl md:text-5xl font-serif font-bold text-foreground mb-4 uppercase">
             Confirme sua Presença
           </h1>
           <p className="text-lg text-muted-foreground">
-            Sua presença tornará nosso eclipse ainda mais especial
+            Sua presença tornará nosso dia ainda mais especial
           </p>
         </div>
 

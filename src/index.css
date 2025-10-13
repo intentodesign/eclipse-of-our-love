@@ -9,7 +9,7 @@ All colors MUST be HSL.
 @layer base {
   :root {
     /* Eclipse Wedding Theme - Soft Celestial Pastels */
-    --background: 0 0% 98%;
+    --background: 0 0% 100%;
     --foreground: 215 20% 25%;
 
     --card: 0 0% 100%;

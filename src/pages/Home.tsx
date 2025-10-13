@@ -37,18 +37,17 @@ const Home = () => {
             <img src={moonIcon} alt="Lua" className="w-16 h-16 md:w-20 md:h-20 float-animation" style={{ animationDelay: '1s' }} />
           </div>
 
-          <h1 className="text-5xl md:text-7xl font-serif font-bold text-foreground leading-tight">
-            Eclipse: Sol & Lua
+          <h1 className="text-5xl md:text-7xl font-serif font-bold text-foreground leading-tight uppercase">
+            Sol & Lua
           </h1>
           
           <p className="text-xl md:text-2xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-            Como o eclipse que une o sol e a lua em um momento raro e mágico, 
-            celebramos a união de dois mundos que se complementam perfeitamente
+            Celebramos nossa união e o início de uma nova jornada juntos
           </p>
 
           <div className="flex items-center justify-center gap-3 text-accent text-lg">
             <div className="w-12 h-px bg-accent/30" />
-            <span className="font-serif italic">Um amor celestial</span>
+            <span className="font-serif italic">Nosso casamento</span>
             <div className="w-12 h-px bg-accent/30" />
           </div>
         </div>
@@ -59,7 +58,7 @@ const Home = () => {
         <div className="max-w-4xl mx-auto">
           <Card className="shadow-soft backdrop-blur-sm bg-card/80 border-primary/20 p-8 md:p-12">
             <div className="text-center space-y-8">
-              <h2 className="text-3xl md:text-4xl font-serif font-semibold text-foreground">
+              <h2 className="text-3xl md:text-4xl font-serif font-semibold text-foreground uppercase">
                 Celebre Conosco
               </h2>
               
@@ -88,9 +87,8 @@ const Home = () => {
 
               <div className="pt-8 border-t border-border/50 mt-12">
                 <p className="text-lg text-muted-foreground leading-relaxed max-w-2xl mx-auto mb-8">
-                  Assim como o eclipse representa o encontro perfeito entre o sol e a lua, 
-                  nossa união celebra a harmonia entre dois corações que se encontraram 
-                  e se complementam. Venha testemunhar este momento único e especial.
+                  Será uma alegria compartilhar este momento especial com você. 
+                  Venha celebrar conosco o nosso amor e o início de nossa vida juntos.
                 </p>
 
                 <Button 

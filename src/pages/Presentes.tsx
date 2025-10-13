@@ -51,7 +51,7 @@ const Presentes = () => {
       <div className="relative z-10 max-w-4xl mx-auto">
         <div className="text-center mb-12 animate-fadeIn">
           <Gift className="w-12 h-12 mx-auto mb-4 text-secondary shimmer" />
-          <h1 className="text-4xl md:text-5xl font-serif font-bold text-foreground mb-4">
+          <h1 className="text-4xl md:text-5xl font-serif font-bold text-foreground mb-4 uppercase">
             Lista de Presentes
           </h1>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
@@ -86,7 +86,7 @@ const Presentes = () => {
 
         <Card className="shadow-soft backdrop-blur-sm bg-card/80 border-accent/20 p-8 text-center">
           <Heart className="w-10 h-10 mx-auto mb-4 text-accent fill-accent/20" />
-          <h2 className="text-2xl font-serif font-semibold mb-4">
+          <h2 className="text-2xl font-serif font-semibold mb-4 uppercase">
             Não Quer Dar Presente?
           </h2>
           
