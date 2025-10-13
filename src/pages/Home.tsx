@@ -5,8 +5,6 @@ import { StarField } from "@/components/StarField";
 import { Calendar, MapPin, Heart, Eclipse } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import eclipseHero from "@/assets/eclipse-hero.jpg";
-import { createWeddingEvent, downloadICS } from "@/utils/calendar";
-import { toast } from "sonner";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -100,29 +98,13 @@ const Home = () => {
                   Venha celebrar conosco o nosso amor e o início de nossa vida juntos.
                 </p>
 
-                <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                <div className="flex justify-center">
                   <Button
                     size="lg"
                     onClick={() => navigate('/confirmar')}
                     className="bg-gradient-eclipse hover:opacity-90 text-foreground font-medium px-8 py-6 text-lg shadow-glow transition-smooth"
                   >
                     Confirmar Presença
-                  </Button>
-
-                  <Button
-                    size="lg"
-                    variant="outline"
-                    onClick={() => {
-                      const event = createWeddingEvent();
-                      downloadICS(event);
-                      toast.success("Evento baixado!", {
-                        description: "Abra o arquivo para adicionar ao seu calendário com todos os lembretes configurados."
-                      });
-                    }}
-                    className="border-primary/30 hover:bg-primary/10 transition-smooth"
-                  >
-                    <Calendar className="w-5 h-5 mr-2" />
-                    Adicionar ao Calendário
                   </Button>
                 </div>
               </div>

@@ -2,11 +2,15 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { EclipseDecoration } from "@/components/EclipseDecoration";
 import { StarField } from "@/components/StarField";
-import { Heart, Home as HomeIcon, Sparkles } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { Heart, Home as HomeIcon, Sparkles, Calendar } from "lucide-react";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { openGoogleCalendar } from "@/utils/calendar";
 
 const Obrigado = () => {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const presente = searchParams.get('presente');
+  const valor = searchParams.get('valor');
 
   return (
     <div className="min-h-screen relative overflow-hidden py-20 px-4">
@@ -36,9 +40,15 @@ const Obrigado = () => {
           <h1 className="text-4xl md:text-6xl font-serif font-bold text-foreground mb-6 uppercase leading-tight">
             Muito Obrigado!
           </h1>
-          <p className="text-xl md:text-2xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-            Sua presença é o maior presente que poderíamos receber
-          </p>
+          {presente && valor ? (
+            <p className="text-xl md:text-2xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+              Ficamos muito felizes com {presente === 'vaquinha' ? `sua contribuição de R$ ${valor}` : `o presente: ${presente}`}!
+            </p>
+          ) : (
+            <p className="text-xl md:text-2xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+              Sua presença é o maior presente que poderíamos receber
+            </p>
+          )}
         </div>
 
         <Card className="shadow-soft backdrop-blur-sm bg-card/80 border-accent/20 p-10 md:p-14 text-center">
@@ -86,10 +96,11 @@ const Obrigado = () => {
             <div className="pt-8">
               <Button
                 size="lg"
-                onClick={() => navigate('/')}
+                onClick={openGoogleCalendar}
                 className="bg-gradient-eclipse hover:opacity-90 text-foreground font-medium px-10 py-6 text-lg shadow-glow transition-smooth"
               >
-                Voltar ao Convite
+                <Calendar className="w-5 h-5 mr-2" />
+                Adicionar à Agenda
               </Button>
             </div>
           </div>

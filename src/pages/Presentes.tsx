@@ -40,21 +40,20 @@ const Presentes = () => {
   const [selectedPresent, setSelectedPresent] = useState<Present | null>(null);
 
   const presents: Present[] = [
-    { id: 1, name: "Airfryer", price: 350, icon: Wind, available: true },
-    { id: 2, name: "Cafeteira Expresso", price: 280, icon: Coffee, available: true },
-    { id: 3, name: "Jogo de Panelas Premium", price: 450, icon: Utensils, available: true },
-    { id: 4, name: "Jogo de Cama King", price: 320, icon: Bed, available: true },
-    { id: 5, name: "Smart TV 50\"", price: 1800, icon: Tv, available: true },
-    { id: 6, name: "Aparelho de Jantar 42 Peças", price: 380, icon: UtensilsCrossed, available: true },
+    { id: 1, name: "Jogo de Toalhas", price: 80, icon: Bed, available: true },
+    { id: 2, name: "Cafeteira", price: 120, icon: Coffee, available: true },
+    { id: 3, name: "Jogo de Panelas", price: 180, icon: Utensils, available: true },
+    { id: 4, name: "Airfryer", price: 250, icon: Wind, available: true },
+    { id: 5, name: "Aparelho de Jantar", price: 200, icon: UtensilsCrossed, available: true },
+    { id: 6, name: "Kit Utensilios de Cozinha", price: 150, icon: Utensils, available: true },
   ];
 
   const contributionOptions = [
-    { id: 1, value: 50, label: "R$ 50", description: "Uma pequena lembrança" },
-    { id: 2, value: 100, label: "R$ 100", description: "Ajuda especial" },
-    { id: 3, value: 200, label: "R$ 200", description: "Contribuição generosa" },
-    { id: 4, value: 300, label: "R$ 300", description: "Presente incrível" },
-    { id: 5, value: 500, label: "R$ 500", description: "Presente maravilhoso" },
-    { id: 6, value: 0, label: "Outro valor", description: "Escolha quanto deseja" },
+    { id: 1, value: 20, label: "R$ 20", description: "Um pastel com caldo de cana na orla de Aracaju" },
+    { id: 2, value: 50, label: "R$ 50", description: "Um hambúrguer do Burger King" },
+    { id: 3, value: 200, label: "R$ 200", description: "Um jantar especial" },
+    { id: 4, value: 300, label: "R$ 300", description: "Uma viagem a Maceió" },
+    { id: 5, value: 0, label: "Outro valor", description: "Escolha quanto deseja contribuir" },
   ];
 
   const [selectedContribution, setSelectedContribution] = useState<number | null>(null);
@@ -76,7 +75,7 @@ const Presentes = () => {
     // Quando o Mercado Pago estiver configurado, vai redirecionar para o link de pagamento
     setTimeout(() => {
       setSelectedPresent(null);
-      navigate('/obrigado');
+      navigate(`/obrigado?presente=${encodeURIComponent(selectedPresent.name)}&valor=${selectedPresent.price}`);
     }, 2000);
   };
 
@@ -86,11 +85,13 @@ const Presentes = () => {
   };
 
   const handleConfirmContribution = () => {
+    if (selectedContribution === null) return;
+
     toast.success("Muito obrigado! 💝", {
       description: "Entre em contato conosco para receber os dados bancários.",
       duration: 4000,
     });
-    setTimeout(() => navigate('/obrigado'), 2000);
+    setTimeout(() => navigate(`/obrigado?presente=vaquinha&valor=${selectedContribution > 0 ? selectedContribution : 'personalizado'}`), 2000);
   };
 
   const handleNoContribution = () => {

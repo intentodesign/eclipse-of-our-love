@@ -31,7 +31,7 @@ const Confirmar = () => {
 
   const handlePapelChange = (value: string) => {
     setFormData({ ...formData, papel: value, parentesco: "" });
-    setShowParentesco(value.includes("Família"));
+    setShowParentesco(value.includes("familia"));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
