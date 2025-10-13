@@ -8,8 +8,7 @@
  *    https://script.google.com/macros/s/SEU_SCRIPT_ID/exec
  */
 
-export const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/SEU_SCRIPT_ID_AQUI/exec';
+export const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwTfDlEQgVka7w__cPsYe_uQKY5eaqrHm4gl9UamhtBCaRnZG5EKl_5h8wgfAiwkqk/exec';
 
-// Se você ainda não implantou, use este valor temporário
-// O formulário vai funcionar mas mostrará um aviso
-export const IS_APPS_SCRIPT_CONFIGURED = APPS_SCRIPT_URL.includes('SEU_SCRIPT_ID') === false;
+// Apps Script configurado e pronto para uso
+export const IS_APPS_SCRIPT_CONFIGURED = true;
