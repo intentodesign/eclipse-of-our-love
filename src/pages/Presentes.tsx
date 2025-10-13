@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { EclipseDecoration } from "@/components/EclipseDecoration";
 import { StarField } from "@/components/StarField";
 import {
@@ -13,7 +15,8 @@ import {
   Tv,
   UtensilsCrossed,
   Heart,
-  DollarSign
+  DollarSign,
+  Clock
 } from "lucide-react";
 import { toast } from "sonner";
 import {
@@ -24,6 +27,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { useNavigate } from "react-router-dom";
+import { openPresentReminder } from "@/utils/calendar";
 
 interface Present {
   id: number;
@@ -47,6 +51,18 @@ const Presentes = () => {
   const [showNoGiftDialog, setShowNoGiftDialog] = useState(false);
   const [showVaquinha, setShowVaquinha] = useState(false);
   const [selectedPresent, setSelectedPresent] = useState<Present | null>(null);
+  const [showReminderDialog, setShowReminderDialog] = useState(false);
+  const [reminderItem, setReminderItem] = useState<{ name: string; value: number; link: string } | null>(null);
+
+  // Data padrão: amanhã às 19h
+  const getDefaultReminderDate = () => {
+    const tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    tomorrow.setHours(19, 0, 0, 0);
+    return tomorrow.toISOString().slice(0, 16); // formato: YYYY-MM-DDTHH:mm
+  };
+
+  const [reminderDateTime, setReminderDateTime] = useState(getDefaultReminderDate());
 
   const presents: Present[] = [
     { id: 1, name: "Jogo de Toalhas", price: 80, icon: Bed, available: true, paymentLink: "https://mpago.li/1gHyXWW" },
@@ -106,6 +122,35 @@ const Presentes = () => {
 
   const handleNoContribution = () => {
     navigate('/obrigado');
+  };
+
+  const handleRemindMeLater = (name: string, value: number, link: string) => {
+    setReminderItem({ name, value, link });
+    setSelectedPresent(null); // Fecha o dialog do presente
+    setSelectedContribution(null); // Fecha o dialog da vaquinha (se aplicável)
+    setShowReminderDialog(true);
+  };
+
+  const handleCreateReminder = () => {
+    if (!reminderItem) return;
+
+    const reminderDate = new Date(reminderDateTime);
+
+    openPresentReminder(
+      reminderItem.name,
+      reminderItem.value,
+      reminderItem.link,
+      reminderDate
+    );
+
+    toast.success("Lembrete criado! 📅", {
+      description: "O evento foi adicionado ao seu calendário.",
+      duration: 3000,
+    });
+
+    setShowReminderDialog(false);
+    setReminderItem(null);
+    setReminderDateTime(getDefaultReminderDate());
   };
 
   return (
@@ -236,13 +281,25 @@ const Presentes = () => {
               </div>
 
               {selectedContribution && (
-                <div className="flex gap-4 justify-center animate-fadeIn">
+                <div className="flex flex-col gap-4 justify-center items-center animate-fadeIn max-w-md mx-auto">
                   <Button
                     size="lg"
                     onClick={handleConfirmContribution}
-                    className="bg-gradient-eclipse hover:opacity-90 text-foreground font-medium px-8 py-6 text-lg shadow-glow transition-smooth"
+                    className="w-full bg-gradient-eclipse hover:opacity-90 text-foreground font-medium px-8 py-6 text-lg shadow-glow transition-smooth"
                   >
                     Quero Contribuir{selectedContribution.value > 0 ? ` com ${selectedContribution.label}` : ''}
+                  </Button>
+                  <Button
+                    variant="outline"
+                    onClick={() => handleRemindMeLater(
+                      selectedContribution.value > 0 ? `Vaquinha - ${selectedContribution.label}` : 'Vaquinha - Valor personalizado',
+                      selectedContribution.value,
+                      selectedContribution.paymentLink
+                    )}
+                    className="w-full border-accent/30 hover:bg-accent/10"
+                  >
+                    <Clock className="w-4 h-4 mr-2" />
+                    Não posso agora, lembrar-me depois
                   </Button>
                 </div>
               )}
@@ -293,19 +350,27 @@ const Presentes = () => {
                 </div>
               </DialogDescription>
             </DialogHeader>
-            <div className="flex gap-3 mt-4">
-              <Button
-                variant="outline"
-                onClick={() => setSelectedPresent(null)}
-                className="flex-1"
-              >
-                Cancelar
-              </Button>
+            <div className="flex flex-col gap-3 mt-4">
               <Button
                 onClick={handleBuyPresent}
-                className="flex-1 bg-gradient-eclipse hover:opacity-90 text-foreground shadow-glow"
+                className="w-full bg-gradient-eclipse hover:opacity-90 text-foreground shadow-glow"
               >
                 Confirmar Presente
+              </Button>
+              <Button
+                variant="outline"
+                onClick={() => handleRemindMeLater(selectedPresent.name, selectedPresent.price, selectedPresent.paymentLink)}
+                className="w-full border-accent/30 hover:bg-accent/10"
+              >
+                <Clock className="w-4 h-4 mr-2" />
+                Não posso agora, lembrar-me depois
+              </Button>
+              <Button
+                variant="ghost"
+                onClick={() => setSelectedPresent(null)}
+                className="w-full"
+              >
+                Cancelar
               </Button>
             </div>
           </DialogContent>
@@ -340,6 +405,65 @@ const Presentes = () => {
             >
               Sim, quero contribuir!
             </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      {/* Dialog para criar lembrete */}
+      <Dialog open={showReminderDialog} onOpenChange={setShowReminderDialog}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle className="font-serif text-2xl">
+              Criar Lembrete
+            </DialogTitle>
+            <DialogDescription className="text-base pt-4">
+              {reminderItem && (
+                <div className="space-y-4">
+                  <p className="text-foreground">
+                    <strong>Presente:</strong> {reminderItem.name}
+                  </p>
+                  <p className="text-foreground">
+                    <strong>Valor:</strong> R$ {reminderItem.value.toFixed(2)}
+                  </p>
+                  <p className="text-muted-foreground text-sm">
+                    Escolha quando você quer ser lembrado de dar este presente. Um evento será criado no seu calendário com o link direto para o pagamento.
+                  </p>
+                </div>
+              )}
+            </DialogDescription>
+          </DialogHeader>
+          <div className="space-y-4 mt-4">
+            <div className="space-y-2">
+              <Label htmlFor="reminderDateTime" className="text-base">
+                Data e hora do lembrete
+              </Label>
+              <Input
+                id="reminderDateTime"
+                type="datetime-local"
+                value={reminderDateTime}
+                onChange={(e) => setReminderDateTime(e.target.value)}
+                className="bg-background/50 border-border/50 focus:border-primary transition-smooth"
+              />
+              <p className="text-xs text-muted-foreground">
+                Padrão: Amanhã às 19h (melhor horário para compras! 😉)
+              </p>
+            </div>
+            <div className="flex gap-3">
+              <Button
+                variant="outline"
+                onClick={() => setShowReminderDialog(false)}
+                className="flex-1"
+              >
+                Cancelar
+              </Button>
+              <Button
+                onClick={handleCreateReminder}
+                className="flex-1 bg-gradient-eclipse hover:opacity-90 text-foreground shadow-glow"
+              >
+                <Clock className="w-4 h-4 mr-2" />
+                Criar Lembrete
+              </Button>
+            </div>
           </div>
         </DialogContent>
       </Dialog>

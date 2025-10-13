@@ -40,3 +40,56 @@ export function openGoogleCalendar(): void {
   const url = getGoogleCalendarUrl();
   window.open(url, '_blank');
 }
+
+/**
+ * Cria URL do Google Calendar para lembrete de presente
+ */
+export function createPresentReminderUrl(
+  presentName: string,
+  presentValue: number,
+  paymentLink: string,
+  reminderDate: Date
+): string {
+  // Converte a data local (19h BRT) para UTC
+  const startDate = new Date(reminderDate);
+  const endDate = new Date(startDate.getTime() + 60 * 60 * 1000); // +1 hora
+
+  // Formato: yyyyMMddTHHmmss (UTC)
+  const formatDate = (date: Date) => {
+    const year = date.getUTCFullYear();
+    const month = String(date.getUTCMonth() + 1).padStart(2, '0');
+    const day = String(date.getUTCDate()).padStart(2, '0');
+    const hours = String(date.getUTCHours()).padStart(2, '0');
+    const minutes = String(date.getUTCMinutes()).padStart(2, '0');
+    const seconds = String(date.getUTCSeconds()).padStart(2, '0');
+    return `${year}${month}${day}T${hours}${minutes}${seconds}Z`;
+  };
+
+  const event = {
+    title: `Presente Gabriel e Duda - ${presentName}`,
+    description: `Lembrete para dar o presente!\n\nPresente: ${presentName}\nValor: R$ ${presentValue.toFixed(2)}\n\nClique no link abaixo para fazer o pagamento:\n${paymentLink}`,
+    dates: `${formatDate(startDate)}/${formatDate(endDate)}`
+  };
+
+  const params = new URLSearchParams({
+    action: 'TEMPLATE',
+    text: event.title,
+    details: event.description,
+    dates: event.dates,
+  });
+
+  return `https://calendar.google.com/calendar/render?${params.toString()}`;
+}
+
+/**
+ * Abre Google Calendar com lembrete de presente
+ */
+export function openPresentReminder(
+  presentName: string,
+  presentValue: number,
+  paymentLink: string,
+  reminderDate: Date
+): void {
+  const url = createPresentReminderUrl(presentName, presentValue, paymentLink, reminderDate);
+  window.open(url, '_blank');
+}
