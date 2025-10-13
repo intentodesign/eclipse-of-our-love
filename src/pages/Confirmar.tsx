@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
 import {
   Select,
   SelectContent,
@@ -25,6 +26,7 @@ const Confirmar = () => {
     parentesco: "",
     email: "",
     telefone: "",
+    recado: "",
   });
   const [showParentesco, setShowParentesco] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -200,6 +202,19 @@ const Confirmar = () => {
                 value={formData.telefone}
                 onChange={(e) => setFormData({ ...formData, telefone: e.target.value })}
                 className="bg-background/50 border-border/50 focus:border-primary transition-smooth"
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="recado" className="text-base">
+                Quer deixar um recado para os noivos? (opcional)
+              </Label>
+              <Textarea
+                id="recado"
+                placeholder="Deixe suas palavras de carinho, uma memória especial, ou o que quiser compartilhar com a gente..."
+                value={formData.recado}
+                onChange={(e) => setFormData({ ...formData, recado: e.target.value })}
+                className="bg-background/50 border-border/50 focus:border-primary transition-smooth min-h-[100px] resize-none"
               />
             </div>
 

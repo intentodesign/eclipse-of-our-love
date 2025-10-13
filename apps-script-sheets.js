@@ -29,8 +29,8 @@ function doPost(e) {
     // Se a aba não existe, cria com cabeçalhos
     if (!sheet) {
       sheet = ss.insertSheet(SHEET_NAME);
-      sheet.appendRow(['Timestamp', 'Nome', 'Papel', 'Parentesco', 'Email', 'Telefone']);
-      sheet.getRange('A1:F1').setFontWeight('bold');
+      sheet.appendRow(['Timestamp', 'Nome', 'Papel', 'Parentesco', 'Email', 'Telefone', 'Recado']);
+      sheet.getRange('A1:G1').setFontWeight('bold');
     }
 
     // Prepara os dados
@@ -40,9 +40,10 @@ function doPost(e) {
     const parentesco = data.parentesco || '';
     const email = data.email || '';
     const telefone = data.telefone || '';
+    const recado = data.recado || '';
 
     // Adiciona nova linha
-    sheet.appendRow([timestamp, nome, papel, parentesco, email, telefone]);
+    sheet.appendRow([timestamp, nome, papel, parentesco, email, telefone, recado]);
 
     // Retorna sucesso
     return ContentService
@@ -73,7 +74,8 @@ function testPost() {
         papel: 'familia-noivo',
         parentesco: 'primo',
         email: 'teste@email.com',
-        telefone: '(11) 99999-9999'
+        telefone: '(11) 99999-9999',
+        recado: 'Muito felizes por vocês! Que sejam muito felizes juntos!'
       })
     }
   };

@@ -42,7 +42,7 @@ const Obrigado = () => {
           </h1>
           {presente && valor ? (
             <p className="text-xl md:text-2xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-              Ficamos muito felizes com {presente === 'vaquinha' ? `sua contribuição de R$ ${valor}` : `o presente: ${presente}`}!
+              {presente === 'vaquinha' ? `Sua contribuição de R$ ${valor}` : `Seu presente: ${presente}`}
             </p>
           ) : (
             <p className="text-xl md:text-2xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
@@ -58,13 +58,27 @@ const Obrigado = () => {
             </div>
 
             <div className="space-y-6">
-              <p className="text-lg md:text-xl text-foreground leading-relaxed">
-                Saber que você estará ao nosso lado neste momento tão especial já nos enche de alegria e gratidão.
-              </p>
+              {presente && valor ? (
+                <>
+                  <p className="text-lg md:text-xl text-foreground leading-relaxed">
+                    Sua generosidade nos emociona profundamente. Este {presente === 'vaquinha' ? 'gesto' : 'presente'} nos ajudará a construir nossa vida juntos e será usado com muito carinho.
+                  </p>
 
-              <p className="text-lg text-muted-foreground leading-relaxed">
-                Não precisamos de presentes materiais quando temos o privilégio de compartilhar nossa união com pessoas queridas como você.
-              </p>
+                  <p className="text-lg text-muted-foreground leading-relaxed">
+                    Cada vez que {presente === 'vaquinha' ? 'lembrarmos deste momento' : `usarmos ${presente.toLowerCase()}`}, vamos lembrar do seu apoio e do amor que você tem por nós. Muito obrigado por fazer parte da nossa história!
+                  </p>
+                </>
+              ) : (
+                <>
+                  <p className="text-lg md:text-xl text-foreground leading-relaxed">
+                    Saber que você estará ao nosso lado neste momento tão especial já nos enche de alegria e gratidão.
+                  </p>
+
+                  <p className="text-lg text-muted-foreground leading-relaxed">
+                    Sua presença é tudo o que precisamos para tornar nosso dia completo. Compartilhar nossa união com pessoas queridas como você é o maior presente que poderíamos receber.
+                  </p>
+                </>
+              )}
 
               <div className="pt-6 border-t border-border/50">
                 <p className="text-xl font-serif font-medium text-foreground mb-2">
