@@ -5,6 +5,8 @@ import { StarField } from "@/components/StarField";
 import { Calendar, MapPin, Heart, Eclipse } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import eclipseHero from "@/assets/eclipse-hero.jpg";
+import { createWeddingEvent, downloadICS } from "@/utils/calendar";
+import { toast } from "sonner";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -111,15 +113,11 @@ const Home = () => {
                     size="lg"
                     variant="outline"
                     onClick={() => {
-                      const event = {
-                        title: 'Casamento Gabriel e Duda',
-                        description: 'Celebração do casamento de Gabriel e Duda',
-                        location: 'Salão de Festas Condomínio Versatto',
-                        start: '20260116T170000',
-                        end: '20260116T210000'
-                      };
-                      const url = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(event.title)}&details=${encodeURIComponent(event.description)}&location=${encodeURIComponent(event.location)}&dates=${event.start}/${event.end}`;
-                      window.open(url, '_blank');
+                      const event = createWeddingEvent();
+                      downloadICS(event);
+                      toast.success("Evento baixado!", {
+                        description: "Abra o arquivo para adicionar ao seu calendário com todos os lembretes configurados."
+                      });
                     }}
                     className="border-primary/30 hover:bg-primary/10 transition-smooth"
                   >

@@ -6,6 +6,7 @@ import { HashRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import Confirmar from "./pages/Confirmar";
 import Presentes from "./pages/Presentes";
+import Obrigado from "./pages/Obrigado";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -20,6 +21,7 @@ const App = () => (
           <Route path="/" element={<Home />} />
           <Route path="/confirmar" element={<Confirmar />} />
           <Route path="/presentes" element={<Presentes />} />
+          <Route path="/obrigado" element={<Obrigado />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
