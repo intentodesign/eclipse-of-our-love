@@ -38,7 +38,7 @@ const Home = () => {
           </div>
 
           <h1 className="text-5xl md:text-7xl font-serif font-bold text-foreground leading-tight uppercase">
-            Sol & Lua
+            Gabriel e Duda
           </h1>
           
           <p className="text-xl md:text-2xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
