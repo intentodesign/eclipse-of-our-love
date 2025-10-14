@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { EclipseDecoration } from "@/components/EclipseDecoration";
@@ -6,9 +7,24 @@ import { Calendar, MapPin, Heart, Eclipse } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import eclipseHero from "@/assets/eclipse-hero.jpg";
 import proposalPhoto from "@/assets/proposal.jpg";
+import gallery1 from "@/assets/gallery/gallery-1.jpg";
+import gallery2 from "@/assets/gallery/gallery-2.jpg";
+import gallery3 from "@/assets/gallery/gallery-3.jpg";
+import gallery4 from "@/assets/gallery/gallery-4.jpg";
+import gallery5 from "@/assets/gallery/gallery-5.jpg";
+import gallery6 from "@/assets/gallery/gallery-6.jpg";
 
 const Home = () => {
   const navigate = useNavigate();
+  const [scrollY, setScrollY] = useState(0);
+
+  useEffect(() => {
+    const handleScroll = () => setScrollY(window.scrollY);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const galleryPhotos = [gallery1, gallery2, gallery3, gallery4, gallery5, gallery6];
 
   return (
     <div className="min-h-screen relative overflow-hidden">
@@ -53,11 +69,36 @@ const Home = () => {
       </section>
 
       {/* Our Story Section */}
-      <section className="relative py-20 px-4">
-        <div className="max-w-4xl mx-auto">
-          {/* Photo with simple border */}
-          <div className="flex justify-center mb-12 animate-fadeIn">
-            <div className="relative">
+      <section className="relative py-20 px-4 overflow-hidden">
+        {/* Background Gallery Parallax */}
+        <div className="absolute inset-0 pointer-events-none">
+          <div
+            className="relative h-full"
+            style={{ transform: `translateY(${scrollY * 0.3}px)` }}
+          >
+            {galleryPhotos.map((photo, index) => (
+              <img
+                key={index}
+                src={photo}
+                alt={`Momento ${index + 1}`}
+                className="absolute w-64 h-64 object-cover rounded-lg opacity-10 blur-sm"
+                style={{
+                  top: `${index * 180}px`,
+                  left: index % 2 === 0 ? '5%' : 'auto',
+                  right: index % 2 === 1 ? '5%' : 'auto',
+                }}
+              />
+            ))}
+          </div>
+        </div>
+
+        <div className="max-w-4xl mx-auto relative z-10">
+          {/* Photo with simple border and animation */}
+          <div className="flex justify-center mb-12">
+            <div
+              className="relative animate-in fade-in slide-in-from-bottom-8 duration-1000"
+              style={{ animationDelay: '200ms' }}
+            >
               <img
                 src={proposalPhoto}
                 alt="O pedido de casamento"
@@ -66,8 +107,11 @@ const Home = () => {
             </div>
           </div>
 
-          {/* Story Card */}
-          <Card className="shadow-soft backdrop-blur-sm bg-card/80 border-primary/20 p-8 md:p-12">
+          {/* Story Card with animation */}
+          <Card
+            className="shadow-soft backdrop-blur-sm bg-card/80 border-primary/20 p-8 md:p-12 animate-in fade-in slide-in-from-bottom-8 duration-1000"
+            style={{ animationDelay: '400ms' }}
+          >
             <div className="text-center space-y-6">
               <div className="flex items-center justify-center gap-3 mb-6">
                 <div className="w-12 h-px bg-accent/30" />
