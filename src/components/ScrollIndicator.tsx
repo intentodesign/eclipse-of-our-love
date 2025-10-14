@@ -42,9 +42,9 @@ export const ScrollIndicator = () => {
   if (!show) return null;
 
   return (
-    <div className="fixed bottom-24 left-1/2 -translate-x-1/2 z-40 animate-bounce-slow">
+    <div className="fixed bottom-32 md:bottom-24 left-1/2 -translate-x-1/2 z-40 animate-bounce-slow">
       <div className="flex flex-col items-center gap-2">
-        <div className="text-muted-foreground text-sm font-medium animate-pulse">
+        <div className="hidden sm:block text-muted-foreground text-sm font-medium animate-pulse">
           Role para baixo
         </div>
         <div className="relative">
