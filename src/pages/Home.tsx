@@ -53,7 +53,7 @@ const Home = () => {
           </div>
 
           <h1 className="text-5xl md:text-7xl font-serif font-bold text-foreground leading-tight uppercase">
-            Gabriel e Duda
+            Gabriel e Eduarda
           </h1>
           
           <p className="text-xl md:text-2xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
@@ -139,7 +139,7 @@ const Home = () => {
                 </p>
 
                 <p>
-                  Erramos a mão de noivado enquanto nos ajoelhávamos na frente da família, por volta da meia-noite e quarenta do dia um. Mas estava perfeito assim, imperfeito e nosso.
+                  Ele errou a mão de noivado enquanto se ajoelhava na frente da família, por volta da meia-noite e quarenta do dia um. Mas estava perfeito assim, imperfeito e nosso.
                 </p>
 
                 <p>

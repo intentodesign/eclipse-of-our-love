@@ -13,8 +13,8 @@ export function getGoogleCalendarUrl(): string {
   const endDate = '20260117T000000Z';   // 17/01/2026 00:00 UTC (21:00 BRT)
 
   const event = {
-    title: 'Casamento Gabriel e Duda',
-    description: 'Celebração do casamento de Gabriel e Duda no Salão de Festas do Condomínio Versatto Jardins',
+    title: 'Casamento Gabriel e Eduarda',
+    description: 'Celebração do casamento de Gabriel e Eduarda no Salão de Festas do Condomínio Versatto Jardins',
     location: 'Versatto Jardins, Aracaju, SE',
     dates: `${startDate}/${endDate}`
   };
@@ -66,7 +66,7 @@ export function createPresentReminderUrl(
   };
 
   const event = {
-    title: `Presente Gabriel e Duda - ${presentName}`,
+    title: `Presente Gabriel e Eduarda - ${presentName}`,
     description: `Lembrete para dar o presente!\n\nPresente: ${presentName}\nValor: R$ ${presentValue.toFixed(2)}\n\nClique no link abaixo para fazer o pagamento:\n${paymentLink}`,
     dates: `${formatDate(startDate)}/${formatDate(endDate)}`
   };

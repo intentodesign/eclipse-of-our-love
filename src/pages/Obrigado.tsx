@@ -96,7 +96,7 @@ const Obrigado = () => {
 
               <p className="text-lg font-serif text-foreground">
                 Com carinho,<br />
-                <span className="text-xl">Gabriel e Duda</span>
+                <span className="text-xl">Gabriel e Eduarda</span>
               </p>
             </div>
 
