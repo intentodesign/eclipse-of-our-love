@@ -81,11 +81,13 @@ const Home = () => {
                 key={index}
                 src={photo}
                 alt={`Momento ${index + 1}`}
-                className="absolute w-64 h-64 object-cover rounded-lg opacity-10 blur-sm"
+                className="absolute w-64 h-64 object-cover rounded-lg opacity-15 blur-[2px] float-animation"
                 style={{
                   top: `${index * 180}px`,
                   left: index % 2 === 0 ? '5%' : 'auto',
                   right: index % 2 === 1 ? '5%' : 'auto',
+                  animationDelay: `${index * 0.5}s`,
+                  animationDuration: `${4 + index * 0.5}s`,
                 }}
               />
             ))}
@@ -125,47 +127,47 @@ const Home = () => {
 
               <div className="space-y-6 text-muted-foreground leading-relaxed max-w-2xl mx-auto text-left">
                 <p>
-                  Alguns dias atrás ela me perguntou: <em className="text-foreground">"Quando você percebeu que me amava?"</em>
+                  Nos conhecemos na Universidade Federal. Ela fazia Química, ele Engenharia Mecânica. Corredores diferentes, mundos diferentes, mas algo nos fez cruzar o caminho um do outro.
                 </p>
 
                 <p>
-                  E eu realmente parei pra pensar…
+                  E desde então, construímos uma história que nos trouxe até aqui.
                 </p>
 
                 <p>
-                  Percebi que foi muito antes de derrubar o anel no chão do jeito mais desajeitado possível.
+                  O pedido veio muito depois de percebermos que era para sempre. Foi numa noite qualquer, que se tornou extraordinária quando o anel caiu no chão do jeito mais desajeitado possível.
                 </p>
 
                 <p>
-                  Foi muito antes também, de errar a mão de noivado, enquanto me ajoelhava na frente da família, por volta da meia-noite e quarenta do dia um.
+                  Erramos a mão de noivado enquanto nos ajoelhávamos na frente da família, por volta da meia-noite e quarenta do dia um. Mas estava perfeito assim, imperfeito e nosso.
                 </p>
 
                 <p>
-                  Também foi antes de fazer um jantar a luz de velas e antes ainda de esconder o porta-anel num lugar que ela jamais acharia. Foi uma missão (quase) impossível.
+                  Teve jantar à luz de velas, porta-anel escondido em lugares impossíveis, e uma missão (quase) impossível de manter segredo.
                 </p>
 
                 <p>
-                  Também foi antes de mentir dizendo que ia jogar com meu amigo, quando na verdade, ele me ajudou a escolher o anel perfeito (e isso, meus amigos, poderá e será usado contra mim num futuro não tão distante).
+                  Teve mentira de "vou jogar com meu amigo" quando na verdade estava escolhendo o anel perfeito (e sim, isso poderá e será usado contra ele num futuro não tão distante).
                 </p>
 
                 <p>
-                  Foi antes de pegar uma rolha de um vinho qualquer (que agora não é mais um vinho qualquer) e cortá-la até caber dentro do anel de namoro que lhe dei há tempos atrás, e que se sumisse, ela perceberia no primeiro dia.
+                  Teve até uma rolha de um vinho qualquer (que agora não é mais um vinho qualquer) cortada para caber dentro do anel de namoro antigo, para ela não perceber que sumiu.
                 </p>
 
                 <p className="text-sm italic">
-                  Eu esqueci que o primeiro tinha ficado folgado. Repeti o erro.
+                  Ele esqueceu que o primeiro tinha ficado folgado. Repetiu o erro.
                 </p>
 
                 <p>
-                  Foi antes de muita coisa, mas depois de pensar bastante, percebi que nunca houve uma linha clara entre o amor e o não-amor. Ele chega e fica. Um dia, de repente, você olha pro lado e percebe:
+                  Foi antes de muita coisa, mas nunca houve uma linha clara entre o amor e o não-amor. Ele chega e fica. Um dia, de repente, olhamos pro lado e percebemos:
                 </p>
 
                 <p className="text-xl font-serif text-foreground text-center pt-4">
-                  É ela! Sempre foi.
+                  Somos nós! Sempre fomos.
                 </p>
 
                 <p className="text-foreground font-medium text-center pt-4">
-                  Te amo, minha noiva. Bem-vinda ao nosso início.
+                  E agora, queremos celebrar esse amor com vocês. Bem-vindos ao nosso início.
                 </p>
               </div>
 
