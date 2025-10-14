@@ -28,7 +28,7 @@ const Home = () => {
   const galleryPhotos = [gallery1, gallery2, gallery3, gallery4, gallery5, gallery6];
 
   return (
-    <div className="min-h-screen relative overflow-hidden">
+    <div className="min-h-screen relative overflow-x-hidden">
       <StarField />
       <ScrollIndicator />
       
@@ -71,7 +71,7 @@ const Home = () => {
       </section>
 
       {/* Our Story Section */}
-      <section className="relative py-20 px-4 overflow-hidden">
+      <section className="relative py-20 px-4 overflow-x-clip overflow-y-visible">
         {/* Background Gallery Parallax */}
         <div className="absolute inset-0 pointer-events-none">
           <div
