@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { EclipseDecoration } from "@/components/EclipseDecoration";
 import { StarField } from "@/components/StarField";
+import { ScrollIndicator } from "@/components/ScrollIndicator";
 import { Calendar, MapPin, Heart, Eclipse } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import eclipseHero from "@/assets/eclipse-hero.jpg";
@@ -29,6 +30,7 @@ const Home = () => {
   return (
     <div className="min-h-screen relative overflow-hidden">
       <StarField />
+      <ScrollIndicator />
       
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center justify-center px-4 py-20">
@@ -60,10 +62,10 @@ const Home = () => {
             Celebramos nossa união e o início de uma nova jornada juntos
           </p>
 
-          <div className="flex items-center justify-center gap-3 text-accent text-lg">
-            <div className="w-12 h-px bg-accent/30" />
-            <span className="font-serif italic">Nosso casamento</span>
-            <div className="w-12 h-px bg-accent/30" />
+          <div className="flex items-center justify-center gap-3 text-lg">
+            <div className="w-12 h-px bg-primary/50" />
+            <span className="font-serif italic text-foreground font-semibold px-4 py-2 rounded-md bg-accent/20 backdrop-blur-sm border border-accent/30 shadow-lg">Nosso casamento</span>
+            <div className="w-12 h-px bg-primary/50" />
           </div>
         </div>
       </section>

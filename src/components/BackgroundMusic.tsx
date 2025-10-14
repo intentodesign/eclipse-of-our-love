@@ -68,14 +68,8 @@ export const BackgroundMusic = () => {
       const success = await startPlaying();
 
       if (!success) {
-        // Autoplay bloqueado - aguardar primeira interação
-        const handleFirstInteraction = async () => {
-          await startPlaying();
-        };
-
-        document.addEventListener("click", handleFirstInteraction, { once: true });
-        document.addEventListener("touchstart", handleFirstInteraction, { once: true });
-        document.addEventListener("keydown", handleFirstInteraction, { once: true });
+        // Autoplay bloqueado - só mostrar o botão
+        console.log("Aguardando usuário clicar no botão para tocar a música");
       }
     };
 
@@ -149,27 +143,35 @@ export const BackgroundMusic = () => {
       {/* Controle flutuante */}
       {needsInteraction ? (
         <button
-          onClick={async () => {
-            await startPlaying();
+          onClick={async (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            console.log("Botão clicado, tentando tocar música");
+            const success = await startPlaying();
+            console.log("Resultado:", success ? "Tocando" : "Falhou");
           }}
           className="fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full bg-accent/90 backdrop-blur-sm border-2 border-accent shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center hover:scale-110 group animate-pulse"
           aria-label="Tocar música"
         >
           <Play className="w-6 h-6 text-background group-hover:text-background transition-colors fill-background" />
         </button>
-      ) : (
+      ) : isPlaying && !isMuted ? (
         <button
           onClick={toggleMute}
           className="fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full bg-card/80 backdrop-blur-sm border-2 border-primary/20 shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center hover:scale-110 group"
-          aria-label={isMuted ? "Ativar som" : "Silenciar"}
+          aria-label="Silenciar música"
         >
-          {isMuted ? (
-            <VolumeX className="w-6 h-6 text-muted-foreground group-hover:text-foreground transition-colors" />
-          ) : (
-            <Volume2 className="w-6 h-6 text-primary group-hover:text-primary/80 transition-colors" />
-          )}
+          <Volume2 className="w-6 h-6 text-primary group-hover:text-primary/80 transition-colors" />
         </button>
-      )}
+      ) : isPlaying && isMuted ? (
+        <button
+          onClick={toggleMute}
+          className="fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full bg-card/80 backdrop-blur-sm border-2 border-primary/20 shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center hover:scale-110 group"
+          aria-label="Ativar som"
+        >
+          <VolumeX className="w-6 h-6 text-muted-foreground group-hover:text-foreground transition-colors" />
+        </button>
+      ) : null}
     </>
   );
 };
