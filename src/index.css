@@ -126,7 +126,7 @@ All colors MUST be HSL.
   }
 
   h1, h2, h3, h4, h5, h6 {
-    font-family: 'Playfair Display', serif;
+    font-family: 'Caudex', serif;
   }
 }
 
@@ -171,7 +171,7 @@ All colors MUST be HSL.
   .shimmer {
     animation: shimmer 3s ease-in-out infinite;
   }
-  
+
   @keyframes shimmer {
     0%, 100% {
       opacity: 0.5;
@@ -179,5 +179,11 @@ All colors MUST be HSL.
     50% {
       opacity: 1;
     }
+  }
+
+  .font-story {
+    font-family: 'Ephesis', cursive;
+    font-size: 1.5rem;
+    line-height: 2.5rem;
   }
 }

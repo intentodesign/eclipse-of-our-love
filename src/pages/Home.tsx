@@ -124,7 +124,7 @@ const Home = () => {
                 Nossa História
               </h2>
 
-              <div className="space-y-6 text-muted-foreground leading-relaxed max-w-2xl mx-auto text-left">
+              <div className="space-y-6 text-muted-foreground max-w-2xl mx-auto text-left font-story">
                 <p>
                   Nos conhecemos na Universidade Federal. Ela fazia Química, ele Engenharia Mecânica. Corredores diferentes, mundos diferentes, mas algo nos fez cruzar o caminho um do outro.
                 </p>
