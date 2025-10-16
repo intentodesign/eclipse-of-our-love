@@ -63,13 +63,34 @@ export const BackgroundMusic = () => {
     audio.loop = true;
     audio.volume = 0;
 
-    // Tentar tocar automaticamente
+    let handleFirstInteraction: (() => Promise<void>) | null = null;
+
+    // Tentar tocar automaticamente primeiro
     const tryAutoplay = async () => {
       const success = await startPlaying();
 
       if (!success) {
-        // Autoplay bloqueado - só mostrar o botão
-        console.log("Aguardando usuário clicar no botão para tocar a música");
+        // Autoplay bloqueado - configurar listeners para primeira interação
+        console.log("Aguardando primeira interação do usuário");
+
+        handleFirstInteraction = async () => {
+          console.log("Primeira interação detectada, tentando tocar música");
+          const playSuccess = await startPlaying();
+
+          if (playSuccess && handleFirstInteraction) {
+            // Música começou - remover listeners
+            console.log("Música iniciada com sucesso!");
+            document.removeEventListener('click', handleFirstInteraction);
+            document.removeEventListener('touchstart', handleFirstInteraction);
+            document.removeEventListener('keydown', handleFirstInteraction);
+            handleFirstInteraction = null;
+          }
+        };
+
+        // Adicionar listeners para qualquer interação
+        document.addEventListener('click', handleFirstInteraction);
+        document.addEventListener('touchstart', handleFirstInteraction);
+        document.addEventListener('keydown', handleFirstInteraction);
       }
     };
 
@@ -79,6 +100,11 @@ export const BackgroundMusic = () => {
     return () => {
       if (fadeIntervalRef.current) {
         clearInterval(fadeIntervalRef.current);
+      }
+      if (handleFirstInteraction) {
+        document.removeEventListener('click', handleFirstInteraction);
+        document.removeEventListener('touchstart', handleFirstInteraction);
+        document.removeEventListener('keydown', handleFirstInteraction);
       }
     };
   }, [startPlaying]);
