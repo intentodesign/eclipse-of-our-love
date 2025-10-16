@@ -39,10 +39,10 @@ const Home = () => {
         <EclipseDecoration className="bottom-20 right-10 opacity-20" />
         
         <div className="absolute inset-0 z-0">
-          <img 
-            src={eclipseHero} 
-            alt="Eclipse celestial background" 
-            className="w-full h-full object-cover opacity-20"
+          <img
+            src={eclipseHero}
+            alt="Eclipse celestial background"
+            className="w-full h-full object-cover opacity-35"
           />
           <div className="absolute inset-0 bg-gradient-to-b from-background/80 via-background/60 to-background" />
         </div>
@@ -58,7 +58,7 @@ const Home = () => {
           </div>
 
           <h1 className="text-5xl md:text-7xl font-serif font-bold text-foreground leading-tight uppercase">
-            Gabriel e Eduarda
+            Gabriel e Duda
           </h1>
           
           <p className="text-xl md:text-2xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
@@ -126,47 +126,47 @@ const Home = () => {
 
               <div className="space-y-6 text-muted-foreground max-w-2xl mx-auto text-left font-story">
                 <p>
-                  Nos conhecemos na Universidade Federal. Ela fazia Química, ele Engenharia Mecânica. Corredores diferentes, mundos diferentes, mas algo nos fez cruzar o caminho um do outro.
+                  Eles se conheceram na Universidade Federal. Ela fazia Química, ele Engenharia Mecânica. Corredores diferentes, mundos diferentes, mas o destino conspirou para que seus caminhos se cruzassem.
                 </p>
 
                 <p>
-                  E desde então, construímos uma história que nos trouxe até aqui.
+                  E desde então, construíram uma história que os trouxe até este momento.
                 </p>
 
                 <p>
-                  O pedido veio muito depois de percebermos que era para sempre. Foi numa noite qualquer, que se tornou extraordinária quando o anel caiu no chão do jeito mais desajeitado possível.
+                  O pedido veio muito depois de ambos perceberem que era para sempre. Foi numa noite qualquer, que se tornou extraordinária quando o anel caiu no chão do jeito mais desajeitado possível.
                 </p>
 
                 <p>
-                  Ele errou a mão de noivado enquanto se ajoelhava na frente da família, por volta da meia-noite e quarenta do dia um. Mas estava perfeito assim, imperfeito e nosso.
+                  Ele errou a mão de noivado enquanto se ajoelhava na frente da família, por volta da meia-noite e quarenta do dia um. Mas estava perfeito assim, imperfeito e deles.
                 </p>
 
                 <p>
-                  Teve jantar à luz de velas, porta-anel escondido em lugares impossíveis, e uma missão (quase) impossível de manter segredo.
+                  Houve jantar à luz de velas, porta-anel escondido em lugares impossíveis, e uma missão (quase) impossível de manter segredo.
                 </p>
 
                 <p>
-                  Teve mentira de "vou jogar com meu amigo" quando na verdade estava escolhendo o anel perfeito (e sim, isso poderá e será usado contra ele num futuro não tão distante).
+                  Houve mentiras de "vou jogar com meu amigo" quando na verdade estava escolhendo o anel perfeito (e sim, isso poderá e será usado contra ele num futuro não tão distante).
                 </p>
 
                 <p>
-                  Teve até uma rolha de um vinho qualquer (que agora não é mais um vinho qualquer) cortada para caber dentro do anel de namoro antigo, para ela não perceber que sumiu.
+                  Houve até uma rolha de um vinho qualquer (que agora não é mais um vinho qualquer) cortada para caber dentro do anel de namoro antigo, para ela não perceber que havia sumido.
                 </p>
 
                 <p className="text-sm italic">
-                  Ele esqueceu que o primeiro tinha ficado folgado. Repetiu o erro.
+                  Ele esqueceu que o primeiro havia ficado folgado. Repetiu o erro.
                 </p>
 
                 <p>
-                  Foi antes de muita coisa, mas nunca houve uma linha clara entre o amor e o não-amor. Ele chega e fica. Um dia, de repente, olhamos pro lado e percebemos:
+                  Foi antes de muita coisa, mas nunca houve uma linha clara entre o amor e o não-amor. Ele chega e fica. Um dia, de repente, olharam para o lado e perceberam:
                 </p>
 
                 <p className="text-xl font-serif text-foreground text-center pt-4">
-                  Somos nós! Sempre fomos.
+                  São eles! Sempre foram.
                 </p>
 
                 <p className="text-foreground font-medium text-center pt-4">
-                  E agora, queremos celebrar esse amor com vocês. Bem-vindos ao nosso início.
+                  E agora, celebram esse amor com todos vocês. Bem-vindos ao início deles.
                 </p>
               </div>
             </div>
