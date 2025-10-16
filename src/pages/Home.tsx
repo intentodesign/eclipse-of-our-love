@@ -120,12 +120,6 @@ const Home = () => {
             style={{ animationDelay: '400ms' }}
           >
             <div className="text-center space-y-6">
-              <div className="flex items-center justify-center gap-3 mb-6">
-                <div className="w-12 h-px bg-accent/30" />
-                <Heart className="w-6 h-6 text-accent fill-accent" />
-                <div className="w-12 h-px bg-accent/30" />
-              </div>
-
               <h2 className="text-3xl md:text-4xl font-serif font-semibold text-foreground uppercase mb-8">
                 Nossa História
               </h2>
@@ -174,12 +168,6 @@ const Home = () => {
                 <p className="text-foreground font-medium text-center pt-4">
                   E agora, queremos celebrar esse amor com vocês. Bem-vindos ao nosso início.
                 </p>
-              </div>
-
-              <div className="flex items-center justify-center gap-3 mt-8">
-                <div className="w-12 h-px bg-accent/30" />
-                <Heart className="w-6 h-6 text-accent fill-accent" />
-                <div className="w-12 h-px bg-accent/30" />
               </div>
             </div>
           </Card>
