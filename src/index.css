@@ -8,29 +8,29 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    /* Eclipse Wedding Theme - Soft Celestial Pastels */
-    --background: 0 0% 100%;
+    /* Eclipse Wedding Theme - Nova paleta */
+    --background: 210 14% 96%;
     --foreground: 215 20% 25%;
 
-    --card: 0 0% 100%;
+    --card: 210 14% 96%;
     --card-foreground: 215 20% 25%;
 
-    --popover: 0 0% 100%;
+    --popover: 210 14% 96%;
     --popover-foreground: 215 20% 25%;
 
-    /* Azul eclipse suave */
-    --primary: 215 34% 73%;
+    /* Azul botão #B1C7D6 */
+    --primary: 204 33% 77%;
     --primary-foreground: 215 20% 25%;
 
-    /* Dourado pálido */
-    --secondary: 43 67% 83%;
+    /* Amarelo destaque #E6D5AB */
+    --secondary: 43 56% 79%;
     --secondary-foreground: 215 20% 25%;
 
     --muted: 210 20% 82%;
     --muted-foreground: 215 16% 50%;
 
-    /* Lilás clarinho */
-    --accent: 270 50% 90%;
+    /* Amarelo destaque #E6D5AB */
+    --accent: 43 56% 79%;
     --accent-foreground: 215 20% 25%;
 
     --destructive: 0 70% 60%;
@@ -38,25 +38,25 @@ All colors MUST be HSL.
 
     --border: 215 20% 88%;
     --input: 215 20% 92%;
-    --ring: 215 34% 73%;
+    --ring: 204 33% 77%;
 
     --radius: 1rem;
-    
+
     /* Custom Eclipse Theme Colors */
-    --eclipse-blue: 215 34% 73%;
-    --gold-pale: 43 67% 83%;
+    --eclipse-blue: 204 33% 77%;
+    --gold-pale: 43 56% 79%;
+    --button-shadow: 222 25% 49%;
     --lunar-white: 0 0% 98%;
-    --lilac-soft: 270 50% 90%;
     --slate-blue: 210 20% 82%;
-    
+
     /* Gradients */
-    --gradient-eclipse: linear-gradient(135deg, hsl(215, 34%, 73%) 0%, hsl(270, 50%, 90%) 100%);
-    --gradient-celestial: linear-gradient(180deg, hsl(0, 0%, 98%) 0%, hsl(215, 34%, 95%) 100%);
-    
+    --gradient-eclipse: hsl(204, 33%, 77%);
+    --gradient-celestial: linear-gradient(180deg, hsl(210, 14%, 96%) 0%, hsl(215, 34%, 95%) 100%);
+
     /* Shadows */
-    --shadow-soft: 0 4px 20px -2px hsl(215 34% 73% / 0.15);
-    --shadow-glow: 0 0 30px hsl(270 50% 90% / 0.3);
-    
+    --shadow-soft: 0 4px 20px -2px hsl(222 25% 49% / 0.15);
+    --shadow-glow: 0 4px 8px hsl(222 25% 49% / 0.25);
+
     /* Transitions */
     --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 
@@ -89,16 +89,16 @@ All colors MUST be HSL.
     --popover: 215 25% 15%;
     --popover-foreground: 0 0% 98%;
 
-    --primary: 215 34% 73%;
+    --primary: 204 33% 77%;
     --primary-foreground: 215 25% 12%;
 
-    --secondary: 43 67% 83%;
+    --secondary: 43 56% 79%;
     --secondary-foreground: 215 25% 12%;
 
     --muted: 215 20% 25%;
     --muted-foreground: 215 16% 65%;
 
-    --accent: 270 50% 90%;
+    --accent: 43 56% 79%;
     --accent-foreground: 215 25% 12%;
 
     --destructive: 0 70% 60%;
@@ -106,7 +106,7 @@ All colors MUST be HSL.
 
     --border: 215 20% 25%;
     --input: 215 20% 25%;
-    --ring: 215 34% 73%;
+    --ring: 204 33% 77%;
   }
 }
 
@@ -132,19 +132,23 @@ All colors MUST be HSL.
 
 @layer utilities {
   .gradient-eclipse {
-    background: var(--gradient-eclipse);
+    background: hsl(204, 33%, 77%);
   }
-  
+
   .gradient-celestial {
     background: var(--gradient-celestial);
   }
-  
+
   .shadow-soft {
     box-shadow: var(--shadow-soft);
   }
-  
+
   .shadow-glow {
     box-shadow: var(--shadow-glow);
+  }
+
+  .bg-gradient-eclipse {
+    background: hsl(204, 33%, 77%);
   }
   
   .transition-smooth {

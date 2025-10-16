@@ -4,10 +4,11 @@ import { Card } from "@/components/ui/card";
 import { EclipseDecoration } from "@/components/EclipseDecoration";
 import { StarField } from "@/components/StarField";
 import { ScrollIndicator } from "@/components/ScrollIndicator";
-import { Calendar, MapPin, Heart, Eclipse } from "lucide-react";
+import { Calendar, MapPin } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import eclipseHero from "@/assets/eclipse-hero.jpg";
 import proposalPhoto from "@/assets/proposal.jpg";
+import weddingSymbol from "@/assets/wedding-symbol.webp";
 import gallery1 from "@/assets/gallery/gallery-1.jpg";
 import gallery2 from "@/assets/gallery/gallery-2.jpg";
 import gallery3 from "@/assets/gallery/gallery-3.jpg";
@@ -47,11 +48,13 @@ const Home = () => {
         </div>
 
         <div className="relative z-10 max-w-4xl mx-auto text-center space-y-8 animate-fadeIn">
-          {/* Icons decorating the title */}
-          <div className="flex items-center justify-center gap-8 mb-8">
-            <Eclipse className="w-16 h-16 md:w-20 md:h-20 text-primary float-animation" />
-            <Heart className="w-8 h-8 text-accent fill-accent shimmer" />
-            <Eclipse className="w-16 h-16 md:w-20 md:h-20 text-secondary float-animation" style={{ animationDelay: '1s' }} />
+          {/* Logo do casamento */}
+          <div className="flex items-center justify-center mb-8">
+            <img
+              src={weddingSymbol}
+              alt="Símbolo do casamento"
+              className="w-24 h-24 md:w-32 md:h-32 float-animation object-contain"
+            />
           </div>
 
           <h1 className="text-5xl md:text-7xl font-serif font-bold text-foreground leading-tight uppercase">
