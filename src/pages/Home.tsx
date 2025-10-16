@@ -42,7 +42,7 @@ const Home = () => {
           <img
             src={eclipseHero}
             alt="Eclipse celestial background"
-            className="w-full h-full object-cover opacity-35"
+            className="w-full h-full object-cover opacity-45"
           />
           <div className="absolute inset-0 bg-gradient-to-b from-background/80 via-background/60 to-background" />
         </div>
@@ -166,7 +166,7 @@ const Home = () => {
                 </p>
 
                 <p className="text-foreground font-medium text-center pt-4">
-                  E agora, celebram esse amor com todos vocês. Bem-vindos ao início deles.
+                  E agora, celebram esse amor com todos vocês. Bem-vindos ao início.
                 </p>
               </div>
             </div>
