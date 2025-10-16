@@ -42,7 +42,7 @@ export const ScrollIndicator = () => {
   if (!show) return null;
 
   return (
-    <div className="fixed bottom-32 md:bottom-24 left-1/2 -translate-x-1/2 z-40 animate-bounce-slow">
+    <div className="fixed bottom-32 md:bottom-24 left-1/2 z-40 animate-bounce-slow" style={{ transform: 'translateX(-50%)' }}>
       <div className="flex flex-col items-center gap-2">
         <div className="hidden sm:block text-muted-foreground text-sm font-medium animate-pulse">
           Role para baixo
