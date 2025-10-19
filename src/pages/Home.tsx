@@ -8,7 +8,7 @@ import { Calendar, MapPin } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import eclipseHero from "@/assets/eclipse-hero.jpg";
 import proposalPhoto from "@/assets/proposal.jpg";
-import weddingSymbol from "@/assets/wedding-symbol.webp";
+import weddingSymbol from "@/assets/wedding-symbol.png";
 import gallery1 from "@/assets/gallery/gallery-1.jpg";
 import gallery2 from "@/assets/gallery/gallery-2.jpg";
 import gallery3 from "@/assets/gallery/gallery-3.jpg";
@@ -124,7 +124,7 @@ const Home = () => {
                 Nossa História
               </h2>
 
-              <div className="space-y-6 text-muted-foreground max-w-2xl mx-auto text-left font-story">
+              <div className="space-y-6 text-muted-foreground max-w-2xl mx-auto text-center font-story">
                 <p>
                   Eles se conheceram na Universidade Federal. Ela fazia Química, ele Engenharia Mecânica. Corredores diferentes, mundos diferentes, mas o destino conspirou para que seus caminhos se cruzassem.
                 </p>
