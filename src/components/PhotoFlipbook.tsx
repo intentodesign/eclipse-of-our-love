@@ -12,22 +12,31 @@ export const PhotoFlipbook = ({ photos, className = '' }: PhotoFlipbookProps) =>
   const bookRef = useRef<HTMLDivElement>(null);
   const pageFlipRef = useRef<PageFlip | null>(null);
   const [currentPage, setCurrentPage] = useState(0);
-  const [totalPages, setTotalPages] = useState(0);
+  const [isReady, setIsReady] = useState(false);
+
+  // Total de páginas: capa + fotos + contracapa
+  const totalPages = photos.length + 2;
 
   useEffect(() => {
     if (!bookRef.current) return;
 
     const container = bookRef.current;
+    let mounted = true;
 
     // Aguardar o próximo frame para garantir que o DOM está pronto
     const timeoutId = setTimeout(() => {
       try {
-        // Verificar se o container ainda existe
-        if (!container || !container.isConnected) return;
+        // Verificar se o container ainda existe e está montado
+        if (!mounted || !container || !container.isConnected) return;
 
         // Verificar se há páginas disponíveis
         const pages = container.querySelectorAll('.page');
-        if (!pages || pages.length === 0) return;
+        if (!pages || pages.length === 0) {
+          console.warn('Nenhuma página encontrada no flipbook');
+          return;
+        }
+
+        console.log(`Inicializando flipbook com ${pages.length} páginas`);
 
         // Criar o flipbook
         const pageFlip = new PageFlip(container, {
@@ -39,7 +48,7 @@ export const PhotoFlipbook = ({ photos, className = '' }: PhotoFlipbookProps) =>
           minHeight: 370,
           maxHeight: 450,
           showCover: true,
-          flippingTime: 800,
+          flippingTime: 600,
           usePortrait: true,
           startPage: 0,
           drawShadow: true,
@@ -55,22 +64,30 @@ export const PhotoFlipbook = ({ photos, className = '' }: PhotoFlipbookProps) =>
         // Carregar páginas do HTML
         pageFlip.loadFromHTML(pages as NodeListOf<HTMLElement>);
 
-        setTotalPages(photos.length);
-
         // Event listeners
         pageFlip.on('flip', (e: any) => {
+          console.log('Página virada:', e.data);
           setCurrentPage(e.data);
         });
+
+        pageFlip.on('changeState', (e: any) => {
+          console.log('Estado mudou:', e.data);
+        });
+
+        setIsReady(true);
+        console.log('Flipbook inicializado com sucesso');
       } catch (error) {
         console.error('Erro ao inicializar flipbook:', error);
       }
-    }, 100);
+    }, 200);
 
     return () => {
+      mounted = false;
       clearTimeout(timeoutId);
       if (pageFlipRef.current) {
         try {
           pageFlipRef.current.destroy();
+          console.log('Flipbook destruído');
         } catch (error) {
           console.error('Erro ao destruir flipbook:', error);
         }
@@ -80,14 +97,30 @@ export const PhotoFlipbook = ({ photos, className = '' }: PhotoFlipbookProps) =>
   }, [photos]);
 
   const nextPage = () => {
-    if (pageFlipRef.current) {
-      pageFlipRef.current.flipNext();
+    console.log('Tentando ir para próxima página');
+    if (pageFlipRef.current && isReady) {
+      try {
+        pageFlipRef.current.flipNext();
+        console.log('flipNext chamado');
+      } catch (error) {
+        console.error('Erro ao virar página:', error);
+      }
+    } else {
+      console.warn('Flipbook não está pronto');
     }
   };
 
   const prevPage = () => {
-    if (pageFlipRef.current) {
-      pageFlipRef.current.flipPrev();
+    console.log('Tentando ir para página anterior');
+    if (pageFlipRef.current && isReady) {
+      try {
+        pageFlipRef.current.flipPrev();
+        console.log('flipPrev chamado');
+      } catch (error) {
+        console.error('Erro ao virar página:', error);
+      }
+    } else {
+      console.warn('Flipbook não está pronto');
     }
   };
 
@@ -95,37 +128,46 @@ export const PhotoFlipbook = ({ photos, className = '' }: PhotoFlipbookProps) =>
     <div className={`flex flex-col items-center space-y-6 ${className}`}>
       <div className="text-center mb-4">
         <h3 className="text-2xl font-serif text-foreground mb-2">Nossa Galeria</h3>
-        <p className="text-sm text-muted-foreground">Deslize ou toque para virar as páginas</p>
+        <p className="text-sm text-muted-foreground">
+          {isReady ? 'Deslize ou toque para virar as páginas' : 'Carregando...'}
+        </p>
       </div>
 
       <div className="relative">
         <div ref={bookRef} className="flipbook-container">
           {/* Capa do livro */}
-          <div className="page page-cover bg-gradient-to-br from-primary/30 to-secondary/30 border-2 border-primary/40">
-            <div className="flex flex-col items-center justify-center h-full p-6">
-              <h2 className="text-3xl font-serif text-foreground mb-4 text-center">Nossos Momentos</h2>
-              <p className="text-muted-foreground text-center">Deslize para ver</p>
+          <div className="page page-cover" data-density="hard">
+            <div className="page-content">
+              <div className="flex flex-col items-center justify-center h-full p-6">
+                <h2 className="text-3xl font-serif text-foreground mb-4 text-center">Nossos Momentos</h2>
+                <p className="text-muted-foreground text-center">Deslize para ver →</p>
+              </div>
             </div>
           </div>
 
           {/* Páginas com fotos */}
           {photos.map((photo, index) => (
-            <div key={index} className="page bg-background border-2 border-primary/20">
-              <div className="w-full h-full p-3 flex items-center justify-center">
-                <img
-                  src={photo}
-                  alt={`Momento ${index + 1}`}
-                  className="max-w-full max-h-full object-contain rounded-lg"
-                />
+            <div key={index} className="page" data-density="soft">
+              <div className="page-content">
+                <div className="w-full h-full p-3 flex items-center justify-center">
+                  <img
+                    src={photo}
+                    alt={`Momento ${index + 1}`}
+                    className="max-w-full max-h-full object-contain rounded-lg"
+                    draggable="false"
+                  />
+                </div>
               </div>
             </div>
           ))}
 
           {/* Contracapa */}
-          <div className="page page-cover bg-gradient-to-br from-secondary/30 to-primary/30 border-2 border-primary/40">
-            <div className="flex flex-col items-center justify-center h-full p-6">
-              <p className="text-xl font-serif text-foreground text-center">Gabriel & Duda</p>
-              <p className="text-sm text-muted-foreground mt-2">16 de Janeiro de 2026</p>
+          <div className="page page-cover" data-density="hard">
+            <div className="page-content">
+              <div className="flex flex-col items-center justify-center h-full p-6">
+                <p className="text-xl font-serif text-foreground text-center">Gabriel & Duda</p>
+                <p className="text-sm text-muted-foreground mt-2">16 de Janeiro de 2026</p>
+              </div>
             </div>
           </div>
         </div>
@@ -137,22 +179,22 @@ export const PhotoFlipbook = ({ photos, className = '' }: PhotoFlipbookProps) =>
           variant="outline"
           size="icon"
           onClick={prevPage}
-          disabled={currentPage === 0}
-          className="rounded-full border-primary/40 hover:bg-primary/10"
+          disabled={!isReady || currentPage === 0}
+          className="rounded-full border-primary/40 hover:bg-primary/10 disabled:opacity-30"
         >
           <ChevronLeft className="h-4 w-4" />
         </Button>
 
-        <span className="text-sm text-muted-foreground min-w-[60px] text-center">
-          {currentPage} / {totalPages}
+        <span className="text-sm text-muted-foreground min-w-[80px] text-center">
+          {isReady ? `${currentPage + 1} / ${totalPages}` : 'Carregando...'}
         </span>
 
         <Button
           variant="outline"
           size="icon"
           onClick={nextPage}
-          disabled={currentPage >= totalPages}
-          className="rounded-full border-primary/40 hover:bg-primary/10"
+          disabled={!isReady || currentPage >= totalPages - 1}
+          className="rounded-full border-primary/40 hover:bg-primary/10 disabled:opacity-30"
         >
           <ChevronRight className="h-4 w-4" />
         </Button>
@@ -161,6 +203,7 @@ export const PhotoFlipbook = ({ photos, className = '' }: PhotoFlipbookProps) =>
       <style>{`
         .flipbook-container {
           margin: 0 auto;
+          position: relative;
         }
 
         .page {
@@ -169,11 +212,22 @@ export const PhotoFlipbook = ({ photos, className = '' }: PhotoFlipbookProps) =>
           overflow: hidden;
         }
 
+        .page-cover {
+          background: linear-gradient(135deg, hsl(var(--primary) / 0.3) 0%, hsl(var(--secondary) / 0.3) 100%);
+          border: 2px solid hsl(var(--primary) / 0.4);
+        }
+
+        .page-content {
+          width: 100%;
+          height: 100%;
+        }
+
         .page img {
           user-select: none;
           -webkit-user-select: none;
           -moz-user-select: none;
           pointer-events: none;
+          -webkit-user-drag: none;
         }
       `}</style>
     </div>
