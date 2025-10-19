@@ -5,10 +5,11 @@ import { Button } from '@/components/ui/button';
 
 interface PhotoFlipbookProps {
   photos: string[];
+  coverPhoto?: string;
   className?: string;
 }
 
-export const PhotoFlipbook = ({ photos, className = '' }: PhotoFlipbookProps) => {
+export const PhotoFlipbook = ({ photos, coverPhoto, className = '' }: PhotoFlipbookProps) => {
   const bookRef = useRef<HTMLDivElement>(null);
   const pageFlipRef = useRef<PageFlip | null>(null);
   const [currentPage, setCurrentPage] = useState(0);
@@ -151,21 +152,25 @@ export const PhotoFlipbook = ({ photos, className = '' }: PhotoFlipbookProps) =>
 
   return (
     <div className={`flex flex-col items-center space-y-6 ${className}`}>
-      <div className="text-center mb-4">
-        <h3 className="text-2xl font-serif text-foreground mb-2">Nossa Galeria</h3>
-        <p className="text-sm text-muted-foreground">
-          {isReady ? 'Deslize ou toque para virar as páginas' : 'Carregando...'}
-        </p>
-      </div>
-
       <div className="relative">
         <div ref={bookRef} className="flipbook-container">
-          {/* Capa do livro */}
-          <div className="page page-cover" data-density="hard">
-            <div className="page-content">
-              <div className="flex flex-col items-center justify-center h-full p-6">
-                <h2 className="text-3xl font-serif text-foreground mb-4 text-center">Nossos Momentos</h2>
-                <p className="text-muted-foreground text-center">Deslize para ver →</p>
+          {/* Capa do livro com foto */}
+          <div className="page page-cover-photo" data-density="hard">
+            <div className="page-content relative">
+              {coverPhoto && (
+                <img
+                  src={coverPhoto}
+                  alt="Capa"
+                  className="absolute inset-0 w-full h-full object-cover"
+                  draggable="false"
+                />
+              )}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
+              <div className="absolute inset-0 flex flex-col items-center justify-center p-6">
+                <h2 className="text-3xl font-serif text-white mb-3 text-center drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">
+                  Nossos Momentos
+                </h2>
+                <p className="text-white/90 text-center text-sm">Deslize para ver →</p>
               </div>
             </div>
           </div>
@@ -240,6 +245,20 @@ export const PhotoFlipbook = ({ photos, className = '' }: PhotoFlipbookProps) =>
         .page-cover {
           background: linear-gradient(135deg, hsl(var(--primary) / 0.3) 0%, hsl(var(--secondary) / 0.3) 100%);
           border: 2px solid hsl(var(--primary) / 0.4);
+        }
+
+        .page-cover-photo {
+          background-color: hsl(var(--card));
+          border: 2px solid hsl(var(--primary) / 0.4);
+          overflow: hidden;
+        }
+
+        .page-cover-photo img {
+          user-select: none;
+          -webkit-user-select: none;
+          -moz-user-select: none;
+          pointer-events: none;
+          -webkit-user-drag: none;
         }
 
         .page-content {

@@ -103,10 +103,10 @@ const Home = () => {
         <div className="max-w-4xl mx-auto relative z-10">
           {/* Flipbook - Mobile only */}
           <div className="md:hidden mb-12 flex justify-center">
-            <PhotoFlipbook photos={galleryPhotos} />
+            <PhotoFlipbook photos={galleryPhotos} coverPhoto={proposalPhoto} />
           </div>
-          {/* Photo with simple border and animation */}
-          <div className="flex justify-center mb-12">
+          {/* Photo with simple border and animation - Desktop only */}
+          <div className="hidden md:flex justify-center mb-12">
             <div
               className="relative animate-in fade-in slide-in-from-bottom-8 duration-1000"
               style={{ animationDelay: '200ms' }}
