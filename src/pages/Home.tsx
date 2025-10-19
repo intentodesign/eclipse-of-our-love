@@ -4,6 +4,7 @@ import { Card } from "@/components/ui/card";
 import { EclipseDecoration } from "@/components/EclipseDecoration";
 import { StarField } from "@/components/StarField";
 import { ScrollIndicator } from "@/components/ScrollIndicator";
+import { PhotoFlipbook } from "@/components/PhotoFlipbook";
 import { Calendar, MapPin } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import eclipseHero from "@/assets/eclipse-hero.jpg";
@@ -75,8 +76,8 @@ const Home = () => {
 
       {/* Our Story Section */}
       <section className="relative py-20 px-4 overflow-x-clip overflow-y-visible">
-        {/* Background Gallery Parallax */}
-        <div className="absolute inset-0 pointer-events-none">
+        {/* Background Gallery Parallax - Desktop only */}
+        <div className="absolute inset-0 pointer-events-none hidden md:block">
           <div
             className="relative h-full"
             style={{ transform: `translateY(${scrollY * 0.3}px)` }}
@@ -100,6 +101,10 @@ const Home = () => {
         </div>
 
         <div className="max-w-4xl mx-auto relative z-10">
+          {/* Flipbook - Mobile only */}
+          <div className="md:hidden mb-12 flex justify-center">
+            <PhotoFlipbook photos={galleryPhotos} />
+          </div>
           {/* Photo with simple border and animation */}
           <div className="flex justify-center mb-12">
             <div
@@ -191,7 +196,7 @@ const Home = () => {
                   <div>
                     <h3 className="text-xl font-serif font-medium mb-2">Data</h3>
                     <p className="text-muted-foreground text-lg font-medium">16 de Janeiro de 2026</p>
-                    <p className="text-muted-foreground text-sm">17h às 21h</p>
+                    <p className="text-muted-foreground text-sm">19:30 até 22:30</p>
                   </div>
                 </div>
 

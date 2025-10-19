@@ -78,7 +78,7 @@ const Obrigado = () => {
                   Nos vemos no dia 16 de Janeiro de 2026!
                 </p>
                 <p className="text-muted-foreground">
-                  17h no Salão de Festas do Condomínio Versatto
+                  19:30 no Salão de Festas do Condomínio Versatto
                 </p>
               </div>
             </div>

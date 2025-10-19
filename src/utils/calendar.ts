@@ -7,10 +7,10 @@
  * Formato: yyyyMMddTHHmmss (UTC)
  */
 export function getGoogleCalendarUrl(): string {
-  // Data do evento: 16/01/2026 às 17h (horário de Brasília = UTC-3)
-  // Em UTC seria 20h do mesmo dia
-  const startDate = '20260116T200000Z'; // 16/01/2026 20:00 UTC (17:00 BRT)
-  const endDate = '20260117T000000Z';   // 17/01/2026 00:00 UTC (21:00 BRT)
+  // Data do evento: 16/01/2026 às 19:30 (horário de Brasília = UTC-3)
+  // Em UTC seria 22:30 do mesmo dia
+  const startDate = '20260116T223000Z'; // 16/01/2026 22:30 UTC (19:30 BRT)
+  const endDate = '20260117T013000Z';   // 17/01/2026 01:30 UTC (22:30 BRT)
 
   const event = {
     title: 'Casamento Gabriel e Eduarda',
