@@ -42,9 +42,12 @@ export const ScrollIndicator = () => {
   if (!show) return null;
 
   return (
-    <div className="fixed bottom-32 md:bottom-24 left-1/2 z-40 animate-bounce-slow" style={{ transform: 'translateX(-50%)' }}>
-      <div className="flex flex-col items-center gap-2">
-        <div className="hidden sm:block text-muted-foreground text-sm font-medium animate-pulse">
+    <div
+      className="fixed bottom-8 left-1/2 z-50 animate-bounce-slow pointer-events-none"
+      style={{ transform: 'translateX(-50%)' }}
+    >
+      <div className="flex flex-col items-center gap-2 pointer-events-auto">
+        <div className="hidden sm:block text-muted-foreground text-sm font-medium animate-pulse drop-shadow-lg">
           Role para baixo
         </div>
         <div className="relative">
@@ -61,7 +64,7 @@ export const ScrollIndicator = () => {
               setShow(false);
               setHasScrolled(true);
             }}
-            className="relative w-12 h-12 rounded-full bg-gradient-eclipse border-2 border-primary/30 shadow-lg flex items-center justify-center hover:scale-110 transition-transform duration-300 group"
+            className="relative w-12 h-12 rounded-full bg-gradient-eclipse border-2 border-primary/30 shadow-glow flex items-center justify-center hover:scale-110 transition-transform duration-300 group backdrop-blur-sm"
             aria-label="Rolar para baixo"
           >
             <ChevronDown className="w-6 h-6 text-foreground group-hover:text-primary transition-colors animate-bounce-gentle" />
