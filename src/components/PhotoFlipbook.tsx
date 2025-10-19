@@ -22,17 +22,27 @@ export const PhotoFlipbook = ({ photos, className = '' }: PhotoFlipbookProps) =>
 
     const container = bookRef.current;
     let mounted = true;
+    let timeoutId: NodeJS.Timeout;
 
     // Aguardar o próximo frame para garantir que o DOM está pronto
-    const timeoutId = setTimeout(() => {
+    timeoutId = setTimeout(() => {
       try {
         // Verificar se o container ainda existe e está montado
-        if (!mounted || !container || !container.isConnected) return;
+        if (!mounted || !container || !container.isConnected) {
+          console.log('Container não está mais montado, abortando inicialização');
+          return;
+        }
 
         // Verificar se há páginas disponíveis
         const pages = container.querySelectorAll('.page');
         if (!pages || pages.length === 0) {
           console.warn('Nenhuma página encontrada no flipbook');
+          return;
+        }
+
+        // Não inicializar se já existe uma instância
+        if (pageFlipRef.current) {
+          console.log('Flipbook já inicializado, pulando');
           return;
         }
 
@@ -67,34 +77,49 @@ export const PhotoFlipbook = ({ photos, className = '' }: PhotoFlipbookProps) =>
         // Event listeners
         pageFlip.on('flip', (e: any) => {
           console.log('Página virada:', e.data);
-          setCurrentPage(e.data);
+          if (mounted) {
+            setCurrentPage(e.data);
+          }
         });
 
         pageFlip.on('changeState', (e: any) => {
           console.log('Estado mudou:', e.data);
         });
 
-        setIsReady(true);
-        console.log('Flipbook inicializado com sucesso');
+        if (mounted) {
+          setIsReady(true);
+          console.log('Flipbook inicializado com sucesso');
+        }
       } catch (error) {
         console.error('Erro ao inicializar flipbook:', error);
       }
-    }, 200);
+    }, 300);
 
     return () => {
+      console.log('Cleanup do flipbook chamado');
       mounted = false;
-      clearTimeout(timeoutId);
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
+
+      // Só destruir se realmente estiver desmontando o componente
+      // Não destruir em re-renders
       if (pageFlipRef.current) {
         try {
-          pageFlipRef.current.destroy();
-          console.log('Flipbook destruído');
+          // Usar setTimeout para destruir depois que o cleanup terminar
+          setTimeout(() => {
+            if (pageFlipRef.current && !mounted) {
+              pageFlipRef.current.destroy();
+              pageFlipRef.current = null;
+              console.log('Flipbook destruído');
+            }
+          }, 0);
         } catch (error) {
           console.error('Erro ao destruir flipbook:', error);
         }
-        pageFlipRef.current = null;
       }
     };
-  }, [photos]);
+  }, []); // Removi photos da dependência para evitar re-inicializações
 
   const nextPage = () => {
     console.log('Tentando ir para próxima página');
