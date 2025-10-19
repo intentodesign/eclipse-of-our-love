@@ -17,42 +17,65 @@ export const PhotoFlipbook = ({ photos, className = '' }: PhotoFlipbookProps) =>
   useEffect(() => {
     if (!bookRef.current) return;
 
-    // Criar o flipbook
-    const pageFlip = new PageFlip(bookRef.current, {
-      width: 300,
-      height: 400,
-      size: 'stretch',
-      minWidth: 280,
-      maxWidth: 350,
-      minHeight: 370,
-      maxHeight: 450,
-      showCover: true,
-      flippingTime: 800,
-      usePortrait: true,
-      startPage: 0,
-      drawShadow: true,
-      mobileScrollSupport: false,
-      swipeDistance: 30,
-      clickEventForward: true,
-      useMouseEvents: true,
-      maxShadowOpacity: 0.5,
-    });
+    const container = bookRef.current;
 
-    pageFlipRef.current = pageFlip;
+    // Aguardar o próximo frame para garantir que o DOM está pronto
+    const timeoutId = setTimeout(() => {
+      try {
+        // Verificar se o container ainda existe
+        if (!container || !container.isConnected) return;
 
-    // Carregar páginas do HTML
-    const pages = bookRef.current.querySelectorAll('.page');
-    pageFlip.loadFromHTML(pages as NodeListOf<HTMLElement>);
+        // Verificar se há páginas disponíveis
+        const pages = container.querySelectorAll('.page');
+        if (!pages || pages.length === 0) return;
 
-    setTotalPages(photos.length);
+        // Criar o flipbook
+        const pageFlip = new PageFlip(container, {
+          width: 300,
+          height: 400,
+          size: 'stretch',
+          minWidth: 280,
+          maxWidth: 350,
+          minHeight: 370,
+          maxHeight: 450,
+          showCover: true,
+          flippingTime: 800,
+          usePortrait: true,
+          startPage: 0,
+          drawShadow: true,
+          mobileScrollSupport: false,
+          swipeDistance: 30,
+          clickEventForward: true,
+          useMouseEvents: true,
+          maxShadowOpacity: 0.5,
+        });
 
-    // Event listeners
-    pageFlip.on('flip', (e: any) => {
-      setCurrentPage(e.data);
-    });
+        pageFlipRef.current = pageFlip;
+
+        // Carregar páginas do HTML
+        pageFlip.loadFromHTML(pages as NodeListOf<HTMLElement>);
+
+        setTotalPages(photos.length);
+
+        // Event listeners
+        pageFlip.on('flip', (e: any) => {
+          setCurrentPage(e.data);
+        });
+      } catch (error) {
+        console.error('Erro ao inicializar flipbook:', error);
+      }
+    }, 100);
 
     return () => {
-      pageFlip.destroy();
+      clearTimeout(timeoutId);
+      if (pageFlipRef.current) {
+        try {
+          pageFlipRef.current.destroy();
+        } catch (error) {
+          console.error('Erro ao destruir flipbook:', error);
+        }
+        pageFlipRef.current = null;
+      }
     };
   }, [photos]);
 
