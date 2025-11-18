@@ -195,7 +195,7 @@ export const PhotoFlipbook = ({ photos, coverPhoto, className = '' }: PhotoFlipb
           <div className="page page-cover" data-density="hard">
             <div className="page-content">
               <div className="flex flex-col items-center justify-center h-full p-6">
-                <p className="text-xl font-serif text-foreground text-center">Gabriel & Duda</p>
+                <p className="text-xl font-serif text-foreground text-center">Duda & Gabriel</p>
                 <p className="text-sm text-muted-foreground mt-2">16 de Janeiro de 2026</p>
               </div>
             </div>
